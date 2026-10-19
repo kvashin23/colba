@@ -5,48 +5,48 @@
 
   // Меню: пункт с items — выпадающий список
   const NAV = [
-    { title: 'Цены и услуги', href: 'index.html#home-services', items: [
-      ['Окрашивание', `${SITE}/services/okrashivanie`],
-      ['Стрижки и укладки', `${SITE}/services/strizhki-i-ukladki`],
-      ['Уходы', `${SITE}/services/uhody`],
-      ['Ногтевой сервис', `${SITE}/services/nogtevoj-servis`],
-      ['Услуги визажиста', `${SITE}/services/uslugi-vizazhista`],
-      ['Для мужчин', `${SITE}/services/dlya-muzhchin`],
-      ['Все услуги и цены', `${SITE}/services`, true],
+    { title: 'Цены и услуги', href: 'services.html', id: 'services service', items: [
+      ['Окрашивание', 'services.html?cat=okrashivanie'],
+      ['Стрижки и укладки', 'services.html?cat=strizhki-i-ukladki'],
+      ['Уходы', 'services.html?cat=uhody'],
+      ['Ногтевой сервис', 'services.html?cat=nogtevoj-servis'],
+      ['Услуги визажиста', 'services.html?cat=uslugi-vizazhista'],
+      ['Для мужчин', 'services.html?cat=dlya-muzhchin'],
+      ['Все услуги и цены', 'services.html', true],
     ] },
-    { title: 'Портфолио', href: 'index.html#works', items: [
-      ['Фото работ', `${SITE}/gallery/photo`],
-      ['Видео работ', `${SITE}/gallery/video`],
-      ['Наши коллекции', `${SITE}/collections`],
+    { title: 'Портфолио', href: 'gallery.html', id: 'gallery collections', items: [
+      ['Фото работ', 'gallery.html'],
+      ['Видео работ', 'gallery.html?tab=video'],
+      ['Наши коллекции', 'collections.html'],
     ] },
-    { title: 'Акции', href: 'index.html#promotions', items: [
-      ['Скидка 10% в День Рождения', `${SITE}/promotions/16`],
-      ['Скидка 10% на первое посещение', `${SITE}/promotions/17`],
-      ['День Колбы — скидка 15%', `${SITE}/promotions/12`],
-      ['Подарочные сертификаты', `${SITE}/certificates/gift`],
-      ['Все акции', `${SITE}/promotions`, true],
+    { title: 'Акции', href: 'promotions.html', id: 'promotions certificates', items: [
+      ['Скидка 10% в День Рождения', 'promotions.html?id=16'],
+      ['Скидка 10% на первое посещение', 'promotions.html?id=17'],
+      ['День Колбы — скидка 15%', 'promotions.html?id=12'],
+      ['Подарочные сертификаты', 'certificates.html'],
+      ['Все акции', 'promotions.html', true],
     ] },
-    { title: 'Команда', href: 'teams.html', id: 'teams', items: [
+    { title: 'Команда', href: 'teams.html', id: 'teams master', items: [
       ['Колористы', 'teams.html?cat=stilist'],
       ['Визажисты', 'teams.html?cat=vizazhist'],
       ['Мастера ногтевого сервиса', 'teams.html?cat=mastera-nogtevogo-servisa'],
       ['Вся команда', 'teams.html', true],
     ] },
-    { title: 'О Colba', href: `${SITE}/about`, items: [
-      ['О салоне', `${SITE}/about`],
-      ['Отзывы', `${SITE}/feedback`],
-      ['Блог', `${SITE}/blogs`],
-      ['Каталог косметики', `${SITE}/products`],
-      ['Тест на образ', '#'],
-      ['Правила', `${SITE}/rules`],
-      ['Вакансии', `${SITE}/vacansies`],
+    { title: 'О Colba', href: 'about.html', id: 'about reviews blog post products product quiz rules vacancies policy', items: [
+      ['О салоне', 'about.html'],
+      ['Отзывы', 'reviews.html'],
+      ['Блог', 'blog.html'],
+      ['Каталог косметики', 'products.html'],
+      ['Тест на образ', 'quiz.html'],
+      ['Правила', 'rules.html'],
+      ['Вакансии', 'vacancies.html'],
       ['Франшиза', 'https://colbacolorbar-fr.ru/'],
     ] },
-    { title: 'Контакты', href: 'index.html#contacts' },
+    { title: 'Контакты', href: 'contacts.html', id: 'contacts' },
   ];
 
   const chevron = '<svg class="nav__chevron" width="9" height="8" viewBox="0 0 9 8" aria-hidden="true"><path fill="currentColor" d="M6.19 7.06a1.95 1.95 0 0 1-3.38 0L.26 2.82C-.49 1.57.45 0 1.96 0h5.08c1.51 0 2.45 1.57 1.7 2.82z"/></svg>';
-  const current = item => item.id === page || (page === 'master' && item.id === 'teams');
+  const current = item => (item.id || '').split(' ').includes(page);
 
   const navHTML = NAV.map((item, i) => item.items ? `
     <div class="nav__item nav__item--drop${current(item) ? ' is-current' : ''}">
@@ -55,14 +55,14 @@
         ${item.items.map(([t, h, all]) => `<a href="${h}"${all ? ' class="is-all"' : ''}>${t}</a>`).join('')}
       </div>
     </div>` : `
-    <div class="nav__item"><a class="nav__link" href="${item.href}">${item.title}</a></div>`).join('');
+    <div class="nav__item${current(item) ? ' is-current' : ''}"><a class="nav__link" href="${item.href}">${item.title}</a></div>`).join('');
 
   const header = document.querySelector('.site-header');
   header.innerHTML = `
     <a class="logo" href="index.html">COL<sup>or</sup>BA</a>
     <nav class="site-nav" aria-label="Основное меню" id="siteNav">
       ${navHTML}
-      <div class="nav__item"><a class="nav__link is-strong" href="#">Запись</a></div>
+      <div class="nav__item"><a class="nav__link is-strong" href="#book">Запись</a></div>
     </nav>
     <a class="site-phone" href="tel:+74991102210">8 499 110-22-10</a>
     <button class="burger" type="button" aria-label="Меню" aria-expanded="false" aria-controls="siteNav"><span></span><span></span></button>`;
@@ -89,17 +89,17 @@
   // ---------- Подвал ----------
   const FOOT_NAV = [
     ['Услуги', [
-      ['Окрашивание', `${SITE}/services/okrashivanie`], ['Стрижки и укладки', `${SITE}/services/strizhki-i-ukladki`],
-      ['Уходы', `${SITE}/services/uhody`], ['Ногтевой сервис', `${SITE}/services/nogtevoj-servis`],
-      ['Услуги визажиста', `${SITE}/services/uslugi-vizazhista`], ['Для мужчин', `${SITE}/services/dlya-muzhchin`],
+      ['Окрашивание', 'services.html?cat=okrashivanie'], ['Стрижки и укладки', 'services.html?cat=strizhki-i-ukladki'],
+      ['Уходы', 'services.html?cat=uhody'], ['Ногтевой сервис', 'services.html?cat=nogtevoj-servis'],
+      ['Услуги визажиста', 'services.html?cat=uslugi-vizazhista'], ['Для мужчин', 'services.html?cat=dlya-muzhchin'],
     ]],
     ['Салон', [
-      ['О Colba', `${SITE}/about`], ['Команда', 'teams.html'], ['Акции', `${SITE}/promotions`],
-      ['Галерея работ', `${SITE}/gallery/photo`], ['Тест на образ', '#'], ['Блог', `${SITE}/blogs`],
+      ['О Colba', 'about.html'], ['Команда', 'teams.html'], ['Акции', 'promotions.html'],
+      ['Галерея работ', 'gallery.html'], ['Тест на образ', 'quiz.html'], ['Блог', 'blog.html'],
     ]],
     ['Покупателям', [
-      ['Каталог косметики', `${SITE}/products`], ['Подарочные сертификаты', `${SITE}/certificates/gift`],
-      ['Наши коллекции', `${SITE}/collections`], ['Правила', `${SITE}/rules`], ['Вакансии', `${SITE}/vacansies`],
+      ['Каталог косметики', 'products.html'], ['Подарочные сертификаты', 'certificates.html'],
+      ['Наши коллекции', 'collections.html'], ['Правила', 'rules.html'], ['Вакансии', 'vacancies.html'],
     ]],
   ];
   const SOCIAL = [
@@ -161,8 +161,8 @@
     <div class="foot__legal">
       <span>ООО «Колба» · ИНН 9710004510 · ОГРН 5157746080950</span>
       <span>© ${new Date().getFullYear()} Все права защищены</span>
-      <a href="${SITE}/policy">Политика конфиденциальности</a>
-      <a href="${SITE}/rules">Правила посещения салона</a>
+      <a href="policy.html">Политика конфиденциальности</a>
+      <a href="rules.html">Правила посещения салона</a>
       <a class="foot__dev" href="https://nuts-agency.ru/" target="_blank" rel="noopener">Разработка сайта Nuts Digital</a>
     </div>`;
 })();

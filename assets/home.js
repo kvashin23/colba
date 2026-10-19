@@ -1,5 +1,4 @@
 // Данные и отрисовка блоков главной (кроме первого экрана).
-const SITE = 'https://colbacolorbar.ru';
 
 const SERVICES = {
   'Топ-8': [
@@ -70,7 +69,7 @@ const rub = n => n.toLocaleString('ru-RU').replace(/ /g, ' ') + ' ₽';
     `<button type="button" role="tab" aria-pressed="${i === 0}">${n} <small>${SERVICES[n].length}</small></button>`).join('');
   const show = name => {
     list.innerHTML = SERVICES[name].map(([title, price, slug]) => `
-      <li><a href="${SITE}/services/${slug}">
+      <li><a href="service.html?id=${slug.split('/').pop()}">
         <span class="price-list__name">${esc(title)}</span>
         <span class="price-list__price">от ${rub(price)}</span>
       </a></li>`).join('');
@@ -85,7 +84,7 @@ const rub = n => n.toLocaleString('ru-RU').replace(/ /g, ' ') + ' ₽';
 
 // Акции
 document.getElementById('promos').innerHTML = PROMOS.map(p => `
-  <a class="promo" href="${SITE}/promotions/${p.id}">
+  <a class="promo" href="promotions.html?id=${p.id}">
     <div class="promo__img"><img src="${UPLOADS + p.img}" alt="" loading="lazy"></div>
     <span class="promo__when">${esc(p.when)}</span>
     <h3>${esc(p.title)}</h3>
@@ -97,7 +96,7 @@ fitAll(document.getElementById('teamRail'));
 
 // Работы
 document.getElementById('gallery').innerHTML = WORKS.map((src, i) =>
-  `<a href="${src}" target="_blank" rel="noopener"><img src="${src}" alt="Работа салона ${i + 1}" loading="lazy"></a>`).join('');
+  `<a href="${src}" data-lightbox="home"><img src="${src}" alt="Работа салона ${i + 1}" loading="lazy"></a>`).join('');
 
 // Карусель мастеров
 document.querySelectorAll('.arrows').forEach(ctrl => {

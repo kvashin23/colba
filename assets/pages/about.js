@@ -1,0 +1,66 @@
+// О салоне: about.html (тексты — с colbacolorbar.ru/about)
+(() => {
+  const { head, img } = UI;
+  const app = document.getElementById('app');
+  const T = 'https://colbacolorbar.ru/themes/colba-redesign/assets/images/pages/about/';
+  const M = 'https://colbacolorbar.ru/storage/app/media/about-collections/';
+  const team = MASTERS.slice(0, 6);
+  const collPhotos = ['photo_2023-11-30%2018.56.01.jpeg', 'photo_2023-11-30%2018.55.00.jpeg', 'thumb44066000auto-2.jpg', 'photo_2023-11-30%2018.54.44.jpeg', 'photo_2023-11-30%2018.55.24.jpeg'];
+
+  app.innerHTML = `
+    ${head({ title: 'О нас', crumbs: [['О салоне']], lead: 'Colba Color Bar — концептуальное пространство, в котором создаются уникальные окрашивания, уходы и процедуры по восстановлению волос.',
+      extra: `<nav class="anchors" aria-label="Разделы страницы"><a href="#about">О нас</a><a href="#founders">Основатели</a><a href="#mission">Миссия и история</a><a href="#success">Формула успеха</a><a href="#collections">Коллекции</a></nav>` })}
+
+    <section class="block block--tight split" id="about">
+      <div class="panel prose prose--wide">
+        <h2>Мы знаем о волосах всё</h2>
+        <p>Создать роскошный блонд, выйти из чёрного, восстановить потерянное качество волос, вернув им красоту и здоровый блеск — для нашей команды нет невыполнимых задач.</p>
+        <p>Фундамент Colba — это профессиональные колористы, влюблённые в свою профессию. Все члены команды постоянно совершенствуют своё мастерство и следят за последними трендами в бьюти-индустрии.</p>
+        <p>Мы не только обучаемся у ведущих колористов мира, но и проводим собственные мастер-классы, снимаем трендовые коллекции, работаем с блогерами и звёздами.</p>
+        <p>За эти годы наши колористы доказали, что окрашивание волос — это настоящее искусство, магия. Художник пишет картину, а мастер-колорист создаёт уникальный образ для каждого гостя Colba.</p>
+      </div>
+      <div class="media-cover" style="aspect-ratio:4/5"><img src="${T}1.png" alt="Интерьер Colba Color Bar" loading="lazy"></div>
+    </section>
+
+    <section class="block panel prose prose--wide" style="max-width:none">
+      <h2 style="margin-top:0">Философия Colba</h2>
+      <p>Философия Colba родилась из соединения творчества, высокого уровня сервиса и химии. Окрашивание волос — это сложный процесс, в котором помимо видения задействованы фундаментальные знания по продуктам и основам колористики. В этом и состоит уникальность нашего концепта: соединение искусства, создаваемого художником, и глубинных знаний всех процессов, глубокое понимание ингредиентов.</p>
+      <p>Пространство Colba стилизовано под химическую лабораторию: колористы, облачённые в белые халаты, готовят красящие составы в пробирках и колбах, на стенах — таблица Менделеева и портреты знаменитых учёных-химиков. Оказавшись внутри, можно вспомнить свой школьный кабинет химии. Дизайн продуман до мелочей: даже чай подаётся в подогреваемых колбах, а сахар — в упаковках, имитирующих цепочку ДНК.</p>
+      <p>Как говорят наши постоянные гости: «Colba — это салон с уникальной атмосферой». Мы создаём настроение каждый день. Ни дня без химии. А главная химия связывает нас и наших гостей!</p>
+    </section>
+
+    <section class="block" id="founders" aria-labelledby="f-h">
+      <div class="block__head"><div><h2 class="h-section" id="f-h">Основатели проекта</h2><p>Два элемента встретились, и случилась химия</p></div></div>
+      <div class="cards" style="--cols:2">
+        <article class="card"><div class="card__img card__img--tall" style="aspect-ratio:4/5"><img src="${T}founder-1.png" alt="Василий Михайлов" loading="lazy"></div>
+          <h3>Василий Михайлов</h3><p>Предприниматель из Москвы. Основатель лаборатории Colba и сети франчайзинговых парикмахерских «Супермен». Преподавал парикмахерское искусство в академии «Долорес». Победитель международных конкурсов Trend Vision Award и Hairdressing Award.</p></article>
+        <article class="card"><div class="card__img card__img--tall" style="aspect-ratio:4/5"><img src="${T}founder-2.png" alt="Анастасия Попова" loading="lazy"></div>
+          <h3>Анастасия Попова</h3><p>Основатель лаборатории Colba. Инвестор. Тревел-блогер и мать троих детей.</p></article>
+      </div>
+      <p class="block__head" style="margin-top:20px;color:var(--ink-soft)">На свет появился колор-бар ColBa — уникальный проект для женщин, которые ценят комфорт и качество в каждой минуте своего времени. И теперь наша цель — делиться формулой успеха и применять её в других городах.</p>
+    </section>
+
+    <section class="block" id="mission">
+      <div class="facts-grid" style="--cols:2">
+        <div class="fact"><h3>Миссия</h3><p>В ColBa мы глубоко погружены в мир цвета. Мы знаем о колористике всё, от нас у цвета нет секретов — есть безграничные возможности для экспериментов. Мы добиваемся совершенства в каждом оттенке и составляем уникальную формулу успеха для каждой гостьи.</p></div>
+        <div class="fact"><h3>История</h3><p>Colba — концептуальная лаборатория колористики, которая вот уже 8 лет дарит гостям неповторимые эмоции в сочетании с премиальным сервисом. Мы собрали сильнейшую команду мастеров, и у нас появилось множество постоянных гостей, выбирающих нас из года в год.</p></div>
+      </div>
+    </section>
+
+    <section class="block" id="success" aria-labelledby="s-h">
+      <div class="block__head"><div><h2 class="h-section" id="s-h">Формула успеха</h2><p>Эмоциональный сервис, продуманная атмосфера и мастерство</p></div><a class="link-more" href="teams.html">Наша команда</a></div>
+      <div class="panel prose prose--wide" style="max-width:none;margin-bottom:18px"><p style="margin:0">Команда Colba — это сплочённый коллектив профессионалов, влюблённых в своё дело. День ото дня мы стараемся совершенствовать то, что уже сделано, и изобретать что-то абсолютно новое. Ежегодно наши эксперты дополняют и обновляют свои знания в сфере колористики и стрижек — выбирая нас, гости могут быть уверены, что попадут в руки лучших из лучших.</p></div>
+      <div class="rail rail--six" id="aboutTeam">${team.map(cardHTML).join('')}</div>
+      ${UI.arrows('aboutTeam')}
+    </section>
+
+    <section class="block" id="collections" aria-labelledby="c-h">
+      <div class="block__head"><div><h2 class="h-section" id="c-h">История наших коллекций</h2><p>Ежегодно Colba создаёт коллекции окрашиваний и стрижек, отражающие тенденции индустрии и особое видение мастеров лаборатории.</p></div><a class="link-more" href="collections.html">Все коллекции</a></div>
+      <div class="photo-grid" style="--cols:5">${collPhotos.map(p => `<a href="${M}${p}" data-lightbox="about"><img src="${M}${p}" alt="" loading="lazy"></a>`).join('')}</div>
+    </section>
+
+    <section class="block cta"><h2>Приходите знакомиться — <em>в Colba всегда есть химия</em></h2><a class="btn" href="#book">Записаться</a></section>`;
+
+  fitAll(app);
+  UI.initRails(app);
+})();

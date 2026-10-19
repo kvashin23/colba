@@ -63,3 +63,12 @@ function plural(n, one, few, many) {
   if (a >= 2 && a <= 4 && (b < 12 || b > 14)) return few;
   return many;
 }
+
+// Карточка товара каталога (products.html, product.html)
+const productCard = p => `
+  <a class="card" href="product.html?id=${p.id}">
+    <div class="card__img card__img--square"><img src="${UI.img(p.img)}" alt="" loading="lazy"></div>
+    <p class="card__meta">${UI.e(p.volume || '')}</p>
+    <h3>${UI.e(p.title)}</h3>
+    <div class="card__foot"><span class="card__price">${UI.rub(p.price)}</span></div>
+  </a>`;
