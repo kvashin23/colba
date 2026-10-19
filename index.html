@@ -117,7 +117,7 @@ type="button"
           <h2 class="h-section" id="team-h">Наши мастера</h2>
           <a class="link-more" href="teams.html">Вся команда</a>
         </div>
-        <div class="rail others" id="teamRail"></div>
+        <div class="rail rail--six" id="teamRail"></div>
         <div class="arrows" data-for="teamRail">
           <button type="button" data-dir="-1" aria-label="Назад"><svg width="10" height="14" viewBox="0 0 10 14"><path d="M8 1L2 7l6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>
           <button type="button" data-dir="1" aria-label="Вперёд"><svg width="10" height="14" viewBox="0 0 10 14"><path d="M2 1l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>
@@ -135,15 +135,26 @@ type="button"
 
       <!-- Контакты -->
       <section class="contacts" id="contacts" aria-labelledby="contacts-h">
-        <div>
+        <div class="contacts__info">
           <h2 class="h-section" id="contacts-h">Ждём вас в&nbsp;ColBa</h2>
-          <p class="contacts__addr">Москва, Б. Гнездниковский пер., 10<br>м. Пушкинская · Пн–Вс 10:00–22:00</p>
-          <p class="contacts__route">Ближайший выход — м. Пушкинская, первый вагон из центра. Выйти на Тверскую, повернуть направо, в первую арку — Большой Гнездниковский переулок, первый дом слева.</p>
+          <p class="contacts__addr">Москва, Б. Гнездниковский пер., 10</p>
+          <ul class="contacts__facts">
+            <li><b>1 минута</b> пешком от Тверской</li>
+            <li><b>5 минут</b> от м. Пушкинская</li>
+            <li><b>Пн–Вс</b> 10:00–22:00</li>
+          </ul>
+          <p class="contacts__route">Выход из метро — первый вагон из центра, на Тверскую направо. Поворот в первую арку — Большой Гнездниковский переулок, первый дом слева.</p>
+          <div class="contacts__actions">
+            <a class="btn" href="#">Записаться онлайн</a>
+            <div class="contacts__phones">
+              <a class="contacts__phone" href="tel:+74991102210">8 499 110-22-10</a>
+              <a class="contacts__phone" href="tel:+79260220366">8 926 022-03-66</a>
+            </div>
+          </div>
         </div>
-        <div class="contacts__actions">
-          <a class="btn" href="#">Записаться онлайн</a>
-          <a class="contacts__phone" href="tel:+74991102210">8 499 110-22-10</a>
-          <a class="contacts__phone" href="tel:+79260220366">8 926 022-03-66</a>
+        <div class="contacts__map">
+          <iframe src="https://yandex.ru/map-widget/v1/?ll=37.605697%2C55.763556&amp;z=16&amp;pt=37.605697%2C55.763556%2Cpm2rdl" title="Colba Color Bar на карте: Большой Гнездниковский переулок, 10, рядом с Тверской" loading="lazy" allowfullscreen></iframe>
+          <a class="contacts__route-link" href="https://yandex.ru/maps/?rtext=~55.763556%2C37.605697&amp;rtt=auto" target="_blank" rel="noopener">Построить маршрут</a>
         </div>
       </section>
     </div>

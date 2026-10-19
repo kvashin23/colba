@@ -55,6 +55,8 @@ const WORKS = [
   '68e/fc0/b3c/68efc0b3c82ea048569320.png', '69c/4e4/a7b/69c4e4a7b7a85059065863.jpg',
   '69a/1ba/f6d/69a1baf6d4fb5253507574.jpg', '68e/fc5/021/68efc50213c87333883996.jpg',
   '69b/d34/08e/69bd3408eecee191206321.jpg', '69a/1b9/89a/69a1b989a8335568722736.jpg',
+  '68e/fc0/534/68efc05347d34242999891.png', '69c/d04/845/69cd0484518f3502180387.jpg',
+  '68e/fc0/065/68efc006539c0177655079.png', '66c/5db/844/66c5db8441312693659615.jpg',
 ].map(p => UPLOADS + p);
 
 const rub = n => n.toLocaleString('ru-RU').replace(/ /g, ' ') + ' ₽';

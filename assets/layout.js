@@ -163,5 +163,6 @@
       <span>© ${new Date().getFullYear()} Все права защищены</span>
       <a href="${SITE}/policy">Политика конфиденциальности</a>
       <a href="${SITE}/rules">Правила посещения салона</a>
+      <a class="foot__dev" href="https://nuts-agency.ru/" target="_blank" rel="noopener">Разработка сайта Nuts Digital</a>
     </div>`;
 })();
