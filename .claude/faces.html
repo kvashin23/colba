@@ -1,0 +1,20 @@
+<!doctype html>
+<meta charset="utf-8">
+<style>
+  body { margin: 0; font: 12px sans-serif; background: #fff; }
+  .g { display: grid; grid-template-columns: repeat(2, 380px); gap: 14px; padding: 6px; }
+  /* режим проверки: ?cards — все карточки с кадрированием по лицу */
+  .c { position: relative; }
+  .c img { width: 380px; display: block; }
+  .c b { position: absolute; left: 4px; top: 4px; background: #ff0; padding: 1px 4px; font-size: 14px; }
+  .grid { position: absolute; inset: 0 0 auto 0; pointer-events: none;
+    background-image: linear-gradient(to right, rgba(255,0,0,.7) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,0,0,.7) 1px, transparent 1px);
+    background-size: 10% 10%; }
+</style>
+<div class="g" id="g"></div>
+<script src="../assets/data.js"></script>
+<script>
+  const start = +new URLSearchParams(location.search).get('from') || 0;
+  g.innerHTML = MASTERS.slice(start, start + 2).map((m, i) => `<div class="c"><img src="${m.photo}"><div class="grid"></div><b>${start + i} ${m.name}</b></div>`).join('');
+  document.querySelectorAll('.c').forEach(c => { const im = c.querySelector('img'); im.onload = () => c.querySelector('.grid').style.height = im.height + 'px'; });
+</script>

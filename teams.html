@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Мастера салона красоты «ColBa Color Bar», Москва</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@400;500;600&family=Unbounded:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo" href="teams.html">COL<sup>or</sup>BA</a>
+    <nav class="site-nav" aria-label="Основное меню">
+      <a href="#">Цены и услуги</a><a href="#">Портфолио</a><a href="#">Акции</a>
+      <a href="teams.html" aria-current="page">Команда</a><a href="#">Отзывы</a><a href="#">Контакты</a>
+      <a href="#" class="is-strong">Запись</a>
+    </nav>
+    <a class="site-phone" href="tel:+74991102210">8 499 110-22-10</a>
+  </header>
+
+  <main class="page">
+    <nav class="crumbs" aria-label="Хлебные крошки">
+      <a class="crumbs__back" href="javascript:history.back()">‹ Назад</a>
+      <span><a href="#">Главная</a></span><span>Команда</span>
+    </nav>
+
+    <section class="teams-hero">
+      <h1 class="h-display">Наши<br>профессионалы</h1>
+      <div class="filters" role="group" aria-label="Специализация" id="filters"></div>
+    </section>
+
+    <ul class="team" id="grid" aria-label="Мастера"></ul>
+  </main>
+
+  <footer class="site-footer">
+    <span>Москва, м. Пушкинская, Б. Гнездниковский пер., 10</span>
+    <span>8 499 110-22-10 | 8 926 022-03-66</span>
+    <span>Пн–Вс 10:00–22:00</span>
+  </footer>
+
+  <script src="assets/data.js"></script>
+  <script src="assets/common.js"></script>
+  <script>
+    const grid = document.getElementById('grid');
+    const filters = document.getElementById('filters');
+    let current = new URLSearchParams(location.search).get('cat') || 'all';
+    if (current !== 'all' && !CATEGORIES[current]) current = 'all';
+
+    const countIn = cat => MASTERS.filter(m => cat === 'all' || m.cat === cat).length;
+    const tabs = [['all', 'Все мастера'], ...Object.entries(CATEGORIES)];
+    filters.innerHTML = tabs.map(([k, label]) =>
+      `<button type="button" data-cat="${k}" aria-pressed="${k === current}">${label} <small>${countIn(k)}</small></button>`).join('');
+
+    filters.addEventListener('click', e => {
+      const b = e.target.closest('button'); if (!b) return;
+      current = b.dataset.cat;
+      filters.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b));
+      const u = new URL(location);
+      current === 'all' ? u.searchParams.delete('cat') : u.searchParams.set('cat', current);
+      history.replaceState(null, '', u);
+      render();
+    });
+
+    const helper = `
+      <li class="helper">
+        <div>
+          <h2>Не знаете, к кому записаться?</h2>
+          <p>Расскажите администратору, что хотите получить, — подберём мастера под вашу задачу, тип волос и бюджет.</p>
+        </div>
+        <div class="row">
+          <a class="btn" href="#">Подобрать мастера</a>
+          <a class="btn btn--ghost" href="tel:+74991102210">8 499 110-22-10</a>
+        </div>
+      </li>`;
+
+    function render() {
+      const list = MASTERS.filter(m => current === 'all' || m.cat === current);
+      if (!list.length) { grid.innerHTML = '<li class="team__empty">Скоро здесь появятся мастера</li>'; return; }
+      const items = list.map(m => `<li>${cardHTML(m)}</li>`);
+      // подсказка — после второго ряда на «всех мастерах», в конце — в фильтрах
+      items.splice(current === 'all' ? Math.min(6, items.length) : items.length, 0, helper);
+      grid.innerHTML = items.join('');
+      fitAll(grid);
+    }
+    render();
+  </script>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Мастер — ColBa Color Bar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@400;500;600&family=Unbounded:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo" href="teams.html">COL<sup>or</sup>BA</a>
+    <nav class="site-nav" aria-label="Основное меню">
+      <a href="#">Цены и услуги</a><a href="#">Портфолио</a><a href="#">Акции</a>
+      <a href="teams.html" aria-current="page">Команда</a><a href="#">Отзывы</a><a href="#">Контакты</a>
+      <a href="#" class="is-strong">Запись</a>
+    </nav>
+    <a class="site-phone" href="tel:+74991102210">8 499 110-22-10</a>
+  </header>
+
+  <main class="page" id="app"></main>
+
+  <footer class="site-footer">
+    <span>Москва, м. Пушкинская, Б. Гнездниковский пер., 10</span>
+    <span>8 499 110-22-10 | 8 926 022-03-66</span>
+    <span>Пн–Вс 10:00–22:00</span>
+  </footer>
+
+  <script src="assets/data.js"></script>
+  <script src="assets/common.js"></script>
+  <script>
+    const id = +new URLSearchParams(location.search).get('id');
+    const m = MASTERS.find(x => x.id === id) || MASTERS[0];
+    document.title = `${m.name} — ${m.role.toLowerCase()} в ColBa Color Bar`;
+
+    const bio = m.bio || [];
+    const isQuote = p => /^«.*»\.?$/.test(p);
+
+    const arrows = rail => `
+      <div class="arrows" data-for="${rail}">
+        <button type="button" data-dir="-1" aria-label="Назад"><svg width="10" height="14" viewBox="0 0 10 14"><path d="M8 1L2 7l6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>
+        <button type="button" data-dir="1" aria-label="Вперёд"><svg width="10" height="14" viewBox="0 0 10 14"><path d="M2 1l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>
+      </div>`;
+
+    const others = [...MASTERS.filter(x => x.id !== m.id && x.cat === m.cat), ...MASTERS.filter(x => x.cat !== m.cat)];
+
+    document.getElementById('app').innerHTML = `
+      <nav class="crumbs" aria-label="Хлебные крошки">
+        <a class="crumbs__back" href="teams.html">‹ Назад</a>
+        <span><a href="#">Главная</a></span><span><a href="teams.html">Команда</a></span>
+        <span><a href="teams.html?cat=${m.cat}">${esc(CATEGORIES[m.cat])}</a></span>
+      </nav>
+
+      <section class="master-hero">
+        <div class="master-hero__photo">
+          ${photoHTML(m, { eager: true })}
+          ${m.reviewsCount ? `
+            <a class="master-hero__badge" href="#reviews">
+              <b>${ICON_STAR} ${(m.rating || 5).toFixed(1)}</b>
+              ${m.reviewsCount} ${plural(m.reviewsCount, 'отзыв', 'отзыва', 'отзывов')}
+            </a>` : ''}
+        </div>
+        <div class="master-hero__info">
+          <h1 class="master-hero__name">${esc(m.name)}</h1>
+          <div class="master-hero__actions">
+            <a class="btn" href="#">Записаться к мастеру</a>
+            ${m.works?.length ? '<a class="btn btn--ghost" href="#works-h">Смотреть работы</a>' : ''}
+          </div>
+          ${bio.length ? `
+          <div class="about__text">
+            ${bio.map(p => isQuote(p) ? `<p class="about__quote">${esc(p)}</p>` : `<p>${esc(p)}</p>`).join('')}
+          </div>` : ''}
+        </div>
+      </section>
+
+      ${m.works?.length ? `
+      <section class="section" aria-labelledby="works-h">
+        <div class="section__head">
+          <div><h2 class="h-section" id="works-h">Работы мастера</h2><p>Реальные результаты клиентов салона</p></div>
+        </div>
+        <div class="rail works" id="works">
+          ${m.works.map((src, i) => `<a href="${esc(src)}" target="_blank" rel="noopener"><img src="${esc(src)}" alt="Работа мастера ${i + 1}" loading="lazy"></a>`).join('')}
+        </div>
+        ${arrows('works')}
+      </section>` : ''}
+
+      ${m.reviews?.length ? `
+      <section class="section" id="reviews" aria-labelledby="reviews-h">
+        <div class="section__head">
+          <div><h2 class="h-section" id="reviews-h">Отзывы</h2><p>${m.reviewsCount || m.reviews.length} ${plural(m.reviewsCount || m.reviews.length, 'отзыв', 'отзыва', 'отзывов')} · средняя оценка ${(m.rating || 5).toFixed(1)}</p></div>
+        </div>
+        <div class="rail reviews" id="reviewsRail">
+          ${m.reviews.map(r => `
+            <article class="review">
+              <header><h3>${esc(r.author)}</h3>${starsHTML(5)}</header>
+              <p>${esc(r.text)}</p>
+              <time>${esc(r.date)}</time>
+            </article>`).join('')}
+        </div>
+        ${arrows('reviewsRail')}
+      </section>` : ''}
+
+      <section class="cta">
+        <h2>${esc(m.name)}<br><em>ждёт вас в ColBa</em> — подберём удобное время</h2>
+        <a class="btn" href="#">Записаться</a>
+      </section>
+
+      <section class="section" aria-labelledby="others-h">
+        <div class="section__head"><h2 class="h-section" id="others-h">Другие мастера</h2></div>
+        <div class="rail others" id="othersRail">${others.map(cardHTML).join('')}</div>
+        ${arrows('othersRail')}
+      </section>`;
+
+    fitAll(document);
+
+    // Карусели: прокрутка на ширину видимой области, стрелки гаснут на краях
+    document.querySelectorAll('.arrows').forEach(ctrl => {
+      const rail = document.getElementById(ctrl.dataset.for);
+      const [prev, next] = ctrl.querySelectorAll('button');
+      const sync = () => {
+        prev.disabled = rail.scrollLeft <= 2;
+        next.disabled = rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 2;
+      };
+      ctrl.addEventListener('click', e => {
+        const b = e.target.closest('button'); if (!b) return;
+        rail.scrollBy({ left: b.dataset.dir * rail.clientWidth * 0.8, behavior: 'smooth' });
+      });
+      rail.addEventListener('scroll', sync, { passive: true });
+      addEventListener('resize', sync); sync();
+    });
+  </script>
+</body>
+</html>
