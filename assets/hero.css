@@ -1,0 +1,68 @@
+/* Первый экран главной — перенесён с colbacolorbar.ru как есть:
+   анимация красок (fluidWave.js), выезжающий логотип (AOS), кнопка с переливом. */
+
+.home-hero { position: relative; overflow: hidden; }
+
+/* Как на сайте: canvas закреплён на весь экран (скрипт считает координаты мыши от окна).
+   Блоки ниже первого экрана лежат поверх него с непрозрачным фоном. */
+.first-screen__canvas {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  opacity: 0; transition: all .5s ease;
+}
+.home-hero ~ .page { position: relative; z-index: 1; background: var(--bg); padding-top: 1px; }
+.home-hero ~ .page > .section:first-child { margin-top: clamp(40px, 5vw, 72px); }
+.home-hero ~ .page { padding-bottom: 100px; }
+main:has(.home-hero) + .site-footer { position: relative; z-index: 1; margin-top: 0; box-shadow: 0 0 0 14px var(--bg); }
+.first-screen__canvas.is-visible { opacity: 1; }
+
+.page-home-banner {
+  display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 64px;
+  overflow: hidden; min-height: calc(100vh - 62px); pointer-events: none; will-change: contents;
+}
+.page-home-banner .leter:not(.aos-animate) { transform: translate3d(-1200px, 0, 0); }
+.page-home-banner .leter { transition-duration: 3s !important; }
+.page-home-banner .l-1, .page-home-banner .l-2, .page-home-banner .l-3 { transition-duration: 3s !important; will-change: contents; }
+.page-home-banner .l-1[data-aos="fade-right"]:not(.aos-animate) { transform: translate3d(-300px, 0, 0); }
+.page-home-banner .l-2[data-aos="fade-left"]:not(.aos-animate) { transform: translate3d(300px, 0, 0); }
+.page-home-banner .l-3[data-aos="fade-right"]:not(.aos-animate) { transform: translate3d(-500px, 0, 0); }
+.page-home-banner > svg { z-index: 2; position: relative; min-width: 1400px; width: calc(100% + 200px); }
+.page-home-banner__logo { opacity: .6; }
+.page-home-banner__logo path { fill: #fff; }
+.page-home-banner__chevrone-2 {
+  position: relative; z-index: 4; cursor: pointer; pointer-events: all;
+  display: flex; flex-direction: column; gap: 16px; width: 100%; height: 35vh;
+}
+.page-home-banner__chevrone-2-text { font-weight: 300; font-size: 20px; line-height: 120%; text-align: center; }
+.page-home-banner__chevrone-2-arrow { border-top: 1px solid #2d292a; width: 100%; display: flex; align-items: center; justify-content: center; }
+.page-home-banner__signup { position: relative; z-index: 1; pointer-events: all; max-width: 320px; width: 100%; }
+
+@media (min-width: 768px) { .page-home-banner__chevrone-2 { display: none; } }
+@media (max-width: 1023.98px) {
+  .page-home-banner { gap: 40px; }
+  .page-home-banner__logo { transform: translate(25%, 25%) scale(.5); }
+}
+@media (max-width: 767.98px) {
+  .page-home-banner > svg { min-width: unset; width: calc(100% + 500px); }
+}
+
+/* Кнопка с переливающимся градиентом */
+.button-primary {
+  --border-radius: 40px; --border-width: 4px;
+  position: relative; padding: 32px 20px; overflow: hidden;
+  border-radius: var(--border-radius); width: fit-content;
+  color: #2d292a; font-family: Unbounded, sans-serif; font-size: 16px; line-height: 16px; font-weight: 500;
+  z-index: 1; cursor: pointer; animation: bga 40s linear infinite;
+}
+button.button-primary { outline: 0; border: 0; }
+.button-primary__content { text-align: center; }
+.button-primary:not(:disabled):hover .button-primary__content { color: #eff8f5; }
+.button-primary::before {
+  content: ''; position: absolute; top: var(--border-width); left: var(--border-width);
+  width: calc(100% - var(--border-width) * 2); height: calc(100% - var(--border-width) * 2);
+  background: var(--bp-overlay-color, #eff8f5); border-radius: calc(var(--border-radius) - var(--border-width));
+  transition: opacity .3s; opacity: 1; z-index: -1;
+}
+.button-primary:not(:disabled):hover::before { opacity: 0; }
+
+@keyframes bga {0% {background:radial-gradient(50% 50% at center,var(--bga-color-1,#66c2b5),transparent) -116% 33% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-1,#66c2b5),transparent) 195% -23% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-2,#ec826c),transparent) -95% 86% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-2,#ec826c),transparent) 75% 68% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-3,#7796c4),transparent) 370% 22% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-3,#7796c4),transparent) -13% 63% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-4,#2d292a),transparent) -89% -23% / 80% 200% no-repeat }10% {background:radial-gradient(50% 50% at center,var(--bga-color-1,#66c2b5),transparent) 105% -12% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-1,#66c2b5),transparent) -62% 34% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-2,#ec826c),transparent) 281% -28% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-2,#ec826c),transparent) 124% 99% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-3,#7796c4),transparent) -57% -2% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-3,#7796c4),transparent) 183% 13% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-4,#2d292a),transparent) 134% -6% / 80% 200% no-repeat }20% {background:radial-gradient(50% 50% at center,var(--bga-color-1,#66c2b5),transparent) 318% 1% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-1,#66c2b5),transparent) -163% 91% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-2,#ec826c),transparent) 51% 120% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-2,#ec826c),transparent) -131% 106% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-3,#7796c4),transparent) 297% 19% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-3,#7796c4),transparent) 123% 62% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-4,#2d292a),transparent) 290% 91% / 80% 200% no-repeat }30% {background:radial-gradient(50% 50% at center,var(--bga-color-1,#66c2b5),transparent) -98% 119% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-1,#66c2b5),transparent) -174% 94% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-2,#ec826c),transparent) 322% -43% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-2,#ec826c),transparent) 375% 36% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-3,#7796c4),transparent) 126% 11% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-3,#7796c4),transparent) -194% 4% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-4,#2d292a),transparent) 85% 107% / 80% 200% no-repeat }40% {background:radial-gradient(50% 50% at center,var(--bga-color-1,#66c2b5),transparent) 268% 44% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-1,#66c2b5),transparent) -39% -47% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-2,#ec826c),transparent) -129% 10% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-2,#ec826c),transparent) 106% 90% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-3,#7796c4),transparent) -14% 14% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-3,#7796c4),transparent) 199% 109% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-4,#2d292a),transparent) -141% 0% / 80% 200% no-repeat }50% {background:radial-gradient(50% 50% at center,var(--bga-color-1,#66c2b5),transparent) 196% 39% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-1,#66c2b5),transparent) 74% 19% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-2,#ec826c),transparent) -162% 46% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-2,#ec826c),transparent) 243% -55% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-3,#7796c4),transparent) 138% -22% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-3,#7796c4),transparent) -88% -20% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-4,#2d292a),transparent) 144% 111% / 80% 200% no-repeat }60% {background:radial-gradient(50% 50% at center,var(--bga-color-1,#66c2b5),transparent) -80% 99% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-1,#66c2b5),transparent) -105% 109% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-2,#ec826c),transparent) 167% 99% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-2,#ec826c),transparent) -12% 28% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-3,#7796c4),transparent) -57% -14% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-3,#7796c4),transparent) 83% 102% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-4,#2d292a),transparent) 300% 48% / 80% 200% no-repeat }70% {background:radial-gradient(50% 50% at center,var(--bga-color-1,#66c2b5),transparent) 42% -46% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-1,#66c2b5),transparent) -174% -17% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-2,#ec826c),transparent) -130% 17% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-2,#ec826c),transparent) 102% -47% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-3,#7796c4),transparent) 351% 45% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-3,#7796c4),transparent) 40% 45% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-4,#2d292a),transparent) 258% 41% / 80% 200% no-repeat }80% {background:radial-gradient(50% 50% at center,var(--bga-color-1,#66c2b5),transparent) 376% -34% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-1,#66c2b5),transparent) 57% 92% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-2,#ec826c),transparent) 385% 34% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-2,#ec826c),transparent) 20% 51% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-3,#7796c4),transparent) 289% 66% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-3,#7796c4),transparent) -94% 91% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-4,#2d292a),transparent) -194% -26% / 80% 200% no-repeat }90% {background:radial-gradient(50% 50% at center,var(--bga-color-1,#66c2b5),transparent) -46% 1% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-1,#66c2b5),transparent) 347% 43% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-2,#ec826c),transparent) 137% -45% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-2,#ec826c),transparent) 39% -57% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-3,#7796c4),transparent) 181% 79% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-3,#7796c4),transparent) 201% 115% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-4,#2d292a),transparent) -23% -27% / 80% 200% no-repeat }100% {background:radial-gradient(50% 50% at center,var(--bga-color-1,#66c2b5),transparent) -116% 33% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-1,#66c2b5),transparent) 195% -23% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-2,#ec826c),transparent) -95% 86% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-2,#ec826c),transparent) 75% 68% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-3,#7796c4),transparent) 370% 22% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-3,#7796c4),transparent) -13% 63% / 80% 200% no-repeat,radial-gradient(50% 50% at center,var(--bga-color-4,#2d292a),transparent) -89% -23% / 80% 200% no-repeat }}
+
