@@ -1,5 +1,5 @@
 # Простой статический сервер для предпросмотра: powershell -File .claude/serve.ps1
-param([int]$Port = 5173)
+param([int]$Port = 5180)
 $root = Split-Path -Parent $PSScriptRoot
 $types = @{ '.html'='text/html; charset=utf-8'; '.css'='text/css; charset=utf-8'; '.js'='text/javascript; charset=utf-8'; '.svg'='image/svg+xml'; '.png'='image/png'; '.jpg'='image/jpeg'; '.webp'='image/webp'; '.pdf'='application/pdf' }
 $l = [System.Net.HttpListener]::new()
