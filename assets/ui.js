@@ -299,6 +299,24 @@ const UI = (() => {
     ev.preventDefault(); reviewForm(b.dataset.review);
   });
 
+  // Фото для услуги: свои → фото направления → работы галереи с подходящим тегом (без повторов)
+  const GALLERY_TAGS = { okrashivanie: ['okrashivanie-1'], 'strizhki-i-ukladki': ['strizhka-3', 'ukladka-2'], uhody: ['ukladka-2', 'okrashivanie-1'], 'uslugi-vizazhista': ['makiyazh-9'], 'dlya-muzhchin': [], 'nogtevoj-servis': [] };
+  function servicePhotos(slug, cat, limit = 12) {
+    const own = (typeof SERVICES !== 'undefined' && SERVICES[slug]?.photos) || [];
+    const catP = (typeof SERVICE_ABOUT !== 'undefined' && SERVICE_ABOUT[cat]?.photos) || [];
+    const tags = GALLERY_TAGS[cat] || [];
+    const gal = typeof GALLERY !== 'undefined' ? GALLERY.filter(p => p.props.some(t => tags.includes(t))).map(p => p.img) : [];
+    const sib = typeof SERVICES !== 'undefined' ? Object.values(SERVICES).filter(x => x.cat === cat && x.slug !== slug).flatMap(x => x.photos || []) : [];
+    return [...new Set([...own, ...catP, ...sib, ...gal])].slice(0, limit);
+  }
+  // Обложка услуги в списке: своё фото, иначе — фото направления/галереи по индексу (соседние разные)
+  function serviceCover(slug, cat, k = 0) {
+    const own = (typeof SERVICES !== 'undefined' && SERVICES[slug]?.photos?.[0]);
+    if (own) return own;
+    const pool = servicePhotos('', cat, 40);
+    return pool.length ? pool[k % pool.length] : null;
+  }
+
   // Ссылки внутри текстов (описания услуг, статьи) на услуги и статьи, которых нет в данных, — делаем обычным текстом
   function fixLinks(root) {
     const slugs = new Set(cats().flatMap(c => c.groups.flatMap(g => g.items.map(i => i.slug))).filter(Boolean));
@@ -310,5 +328,5 @@ const UI = (() => {
     });
   }
 
-  return { $, $$, e, img, rub, param, crumbs, head, arrows, initRails, tabs, modal, lightbox, field, consent, leadForm, booking, reviewForm, fixLinks, catTitle, UP };
+  return { $, $$, e, img, rub, param, crumbs, head, arrows, initRails, tabs, modal, lightbox, field, consent, leadForm, booking, reviewForm, fixLinks, catTitle, servicePhotos, serviceCover, UP };
 })();

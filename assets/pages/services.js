@@ -26,7 +26,28 @@
   }
   const table = (c, len) => c.groups.map(g => `${g.title ? `<h3>${e(g.title)}</h3>` : ''}${g.items.map(i => row(i, len)).join('')}`).join('');
 
-  // Прайс: слева — сводка и запись, справа — таблица с переключателем длины волос
+  // Витрина с фото: карточка услуги с ценой для выбранной длины волос
+  function tile(i, len, cat, k) {
+    const key = i.price[len] != null ? len : (i.price.one != null ? 'one' : null);
+    const any = Object.values(i.price).filter(v => v != null);
+    const price = key ? rub(i.price[key]) : (any.length ? 'от ' + rub(Math.min(...any)) : '');
+    const time = (key && i.time[key]) || Object.values(i.time)[0] || '';
+    const pic = UI.serviceCover(i.slug, cat, k);
+    const inner = `
+      <div class="svc-card__img">${pic ? `<img src="${img(pic)}" alt="" loading="lazy">` : ''}</div>
+      <h3>${e(i.name)}</h3>
+      ${i.note ? `<small class="svc-card__note">${e(i.note)}</small>` : ''}
+      <p>${price ? `<b>${price}</b>` : ''}${time ? `<span>${e(time)}</span>` : ''}</p>`;
+    return i.slug ? `<a class="svc-card" href="service.html?id=${e(i.slug)}">${inner}</a>` : `<div class="svc-card svc-card--static">${inner}</div>`;
+  }
+  const tiles = (c, len) => { let k = 0; return c.groups.map(g => `${g.title ? `<h3>${e(g.title)}</h3>` : ''}<div class="svc-grid">${g.items.map(i => tile(i, len, c.slug, k++)).join('')}</div>`).join(''); };
+
+  // Вид прайса запоминаем: «С фото» (по умолчанию) или «Списком»
+  const VIEW_KEY = 'colba:services-view';
+  let view = 'photo';
+  try { view = localStorage.getItem(VIEW_KEY) || 'photo'; } catch (_) {}
+
+  // Прайс: слева — сводка и запись, справа — услуги с переключателями вида и длины волос
   function priceBlock(c, mount) {
     let len = 'mid';
     mount.innerHTML = `
@@ -40,11 +61,23 @@
           <a class="price-aside__call" href="tel:+74991102210">или позвоните: 8 499 110-22-10</a>
         </aside>
         <div class="price-table">
-          ${c.lengths ? '<div class="price-table__bar"><span>Длина волос</span><div data-len class="seg"></div></div>' : ''}
+          <div class="price-table__bar">
+            <div data-view class="seg seg--view"></div>
+            ${c.lengths ? '<div class="price-table__len"><span>Длина волос</span><div data-len class="seg"></div></div>' : ''}
+          </div>
           <div data-table></div>
         </div>
       </div>`;
-    const draw = () => { mount.querySelector('[data-table]').innerHTML = table(c, len); UI.fixLinks(mount); };
+    const box = mount.querySelector('.price-table');
+    const draw = () => {
+      box.classList.toggle('is-photo', view === 'photo');
+      mount.querySelector('[data-table]').innerHTML = view === 'photo' ? tiles(c, len) : table(c, len);
+      UI.fixLinks(mount);
+    };
+    tabs(mount.querySelector('[data-view]'), [{ v: 'photo', l: 'С фото' }, { v: 'list', l: 'Списком' }], view, v => {
+      view = v; try { localStorage.setItem(VIEW_KEY, v); } catch (_) {}
+      draw();
+    });
     if (c.lengths) tabs(mount.querySelector('[data-len]'), LEN.map(([v, l]) => ({ v, l })), len, v => { len = v; draw(); });
     draw();
   }

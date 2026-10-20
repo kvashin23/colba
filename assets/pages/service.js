@@ -18,10 +18,9 @@
   prices.sort((a, b) => order.indexOf(a[0]) - order.indexOf(b[0]));
   const others = cat ? cat.groups.flatMap(g => g.items).filter(i => i.slug && i.slug !== s.slug) : [];
   // Карточка услуги с фото: своё фото услуги, иначе — фото направления (разное для соседних карточек)
-  const catPhotos = SERVICE_ABOUT[s.cat]?.photos || [];
+  const works = UI.servicePhotos(s.slug, s.cat);
   const serviceCard = (i, k) => {
-    const own = SERVICES[i.slug]?.photos?.[0];
-    const pic = own || catPhotos[k % Math.max(catPhotos.length, 1)];
+    const pic = UI.serviceCover(i.slug, s.cat, k + 1);
     const v = Object.values(i.price).filter(x => x != null);
     return `<a class="svc-card" href="service.html?id=${e(i.slug)}">
       <div class="svc-card__img">${pic ? `<img src="${img(pic)}" alt="" loading="lazy">` : ''}</div>
@@ -45,13 +44,13 @@
         ${prices.length > 1 ? `<div class="price-cards">${prices.map(([k, v]) => `<div class="price-card"><span>${LEN[k] || k}</span><b>${rub(v)}</b></div>`).join('')}</div>` : ''}
         <div class="page-head__actions">
           <a class="btn" href="#book" data-book data-service="${e(s.slug)}">Записаться на услугу</a>
-          ${s.photos?.length ? '<a class="btn btn--ghost" href="#works">Смотреть работы</a>' : ''}
+          ${works.length ? '<a class="btn btn--ghost" href="#works">Смотреть работы</a>' : ''}
         </div>` })}
 
-    ${s.photos?.length ? `
+    ${works.length ? `
     <section class="block" id="works" aria-labelledby="works-h">
       <div class="block__head"><div><h2 class="h-section" id="works-h">Сделаем так же круто</h2><p>Работы наших мастеров</p></div><a class="link-more" href="gallery.html">Все работы</a></div>
-      <div class="rail rail--six" id="svcWorks">${s.photos.map(p => `<a class="photo" style="display:block" href="${img(p)}" data-lightbox="svc"><img src="${img(p)}" alt="${e(title)}" loading="lazy"></a>`).join('')}</div>
+      <div class="rail rail--six" id="svcWorks" style="--n:${works.length}">${works.map(p => `<a class="photo" style="display:block" href="${img(p)}" data-lightbox="svc"><img src="${img(p)}" alt="${e(title)}" loading="lazy"></a>`).join('')}</div>
       ${arrows('svcWorks')}
     </section>` : ''}
 

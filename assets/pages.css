@@ -409,7 +409,7 @@ html { scroll-padding-top: 80px; }
 .price-aside__call:hover { opacity: 1; }
 .price-layout .price-table { padding-top: 0; }
 .price-layout .price-table > [data-table] > h3:first-child { margin-top: 24px; }
-@media (max-width: 900px) { .price-layout { grid-template-columns: 1fr; } .price-aside { position: static; } }
+@media (max-width: 900px) { .price-layout { grid-template-columns: 1fr; } .price-aside { position: relative; top: 0; } }
 
 /* Длинный текст: заголовок слева, колонка текста удобной ширины справа */
 .reading { display: grid; grid-template-columns: minmax(200px, 1fr) minmax(0, 2.4fr); gap: 24px 48px; }
@@ -475,3 +475,37 @@ html { scroll-padding-top: 80px; }
 .pillar--dark .kicker { color: #f3c2b6; }
 .pillar--dark p:last-child { color: rgba(255,255,255,.82); }
 @media (max-width: 760px) { .pillars { grid-template-columns: 1fr; } }
+
+/* Прайс: переключатели вида и длины волос, витрина услуг с фото */
+.price-table__bar { justify-content: space-between; }
+.price-table__len { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.price-table__len > span { font: 500 12px var(--font-head); text-transform: uppercase; letter-spacing: .06em; color: var(--ink-soft); }
+.seg--view.filters button { padding: 10px 20px; }
+.svc-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin: 14px 0 6px; }
+@media (max-width: 1300px) { .svc-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .svc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; } }
+.price-table .svc-card { background: var(--bg); }
+.svc-card--static { cursor: default; }
+.svc-card--static:hover { transform: none; }
+.svc-card--static:hover h3 { color: inherit; }
+.svc-card__note { display: block; margin: -4px 8px 8px; font-size: 12px; color: var(--ink-soft); }
+.price-table.is-photo > [data-table] > h3 { margin: 26px 0 0; }
+@media (max-width: 560px) {
+  .price-table__bar { flex-direction: column; align-items: stretch; }
+  .price-table__len > span { display: none; }
+  .price-table__len .seg { width: 100%; }
+  .svc-card h3 { font-size: 13px; }
+  .svc-card p b { font-size: 14px; }
+}
+.price-table .svc-card h3 { margin: 0 8px 8px; font: 600 15px/1.3 var(--font-head); text-transform: none; letter-spacing: 0; color: var(--ink); }
+.svc-card h3 { overflow-wrap: break-word; hyphens: manual; }
+.price-table .svc-card:hover h3 { color: var(--accent); }
+@media (max-width: 1200px) {
+  .price-layout { grid-template-columns: 1fr; }
+  .price-aside { position: relative; top: 0; grid-template-columns: 1fr auto; align-items: center; column-gap: 24px; }
+  .price-aside > * { grid-column: 1; }
+  .price-aside .btn { grid-column: 2; grid-row: 1 / span 3; width: auto; }
+  .price-aside__call { grid-column: 2; }
+}
+@media (max-width: 640px) { .price-aside { grid-template-columns: 1fr; } .price-aside .btn, .price-aside__call { grid-column: 1; grid-row: auto; width: 100%; } }
+.price-table .svc-card h3 { font-size: 14px; }
