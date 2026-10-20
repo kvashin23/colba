@@ -1,15 +1,16 @@
-// Услуги и цены: services.html — все категории, services.html?cat=slug — категория
+// Услуги и цены: services.html — все направления, services.html?cat=slug — направление
 (() => {
-  const { e, rub, param, head, arrows, initRails, tabs, img } = UI;
+  const { e, rub, param, head, arrows, initRails, tabs, img, catTitle } = UI;
   const app = document.getElementById('app');
-  const LETTERS = { okrashivanie: 'O', 'strizhki-i-ukladki': 'S', uhody: 'U', 'nogtevoj-servis': 'N', 'uslugi-vizazhista': 'Us', 'dlya-muzhchin': 'M' };
   const LEN = [['short', 'Короткие'], ['mid', 'Средние'], ['long', 'Длинные']];
-  const count = c => c.groups.reduce((n, g) => n + g.items.length, 0);
-  const lead = c => {
+  const items = c => c.groups.flatMap(g => g.items);
+  const count = c => items(c).length;
+  const minPrice = c => Math.min(...items(c).flatMap(i => Object.values(i.price).filter(v => v != null)));
+  const firstSentence = c => {
     const t = (SERVICE_ABOUT[c.slug]?.about || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
-    return t.split(/(?<=[.!?])\s/)[0].slice(0, 140);
+    const s = t.split(/(?<=[.!?])\s/)[0] || '';
+    return s.length <= 170 ? s : '';
   };
-  const plainTitle = UI.catTitle;
 
   // Строка прайса для выбранной длины волос
   function row(i, len) {
@@ -23,24 +24,39 @@
       <span class="price-row__price">${price}</span>`;
     return i.slug ? `<a class="price-row" href="service.html?id=${e(i.slug)}">${inner}</a>` : `<div class="price-row">${inner}</div>`;
   }
-  function table(c, len) {
-    return `<div class="price-table">
-      ${c.groups.map(g => `${g.title ? `<h3>${e(g.title)}</h3>` : ''}${g.items.map(i => row(i, len)).join('')}`).join('')}
-      ${c.lengths ? '<p class="price-note">Нарощенные или густые волосы — +30% к цене. Точную стоимость мастер назовёт после консультации.</p>' : ''}
-    </div>`;
-  }
-  // Переключатель длины волос + таблица
+  const table = (c, len) => c.groups.map(g => `${g.title ? `<h3>${e(g.title)}</h3>` : ''}${g.items.map(i => row(i, len)).join('')}`).join('');
+
+  // Прайс: слева — сводка и запись, справа — таблица с переключателем длины волос
   function priceBlock(c, mount) {
     let len = 'mid';
-    const draw = () => { mount.querySelector('[data-table]').innerHTML = table(c, len); };
-    mount.innerHTML = `${c.lengths ? '<div data-len></div>' : ''}<div data-table></div>`;
+    mount.innerHTML = `
+      <div class="price-layout">
+        <aside class="price-aside">
+          <p class="price-aside__kicker">${count(c)} ${plural(count(c), 'услуга', 'услуги', 'услуг')}</p>
+          <h3 class="price-aside__title">${e(catTitle(c))}</h3>
+          <p class="price-aside__from">от <b>${rub(minPrice(c))}</b></p>
+          ${c.lengths ? '<p class="price-aside__note">Цена зависит от длины волос. Нарощенные или густые — +30%. Точную стоимость мастер назовёт на консультации.</p>' : '<p class="price-aside__note">Точную стоимость администратор подтвердит при записи.</p>'}
+          <a class="btn" href="#book">Записаться</a>
+          <a class="price-aside__call" href="tel:+74991102210">или позвоните: 8 499 110-22-10</a>
+        </aside>
+        <div class="price-table">
+          ${c.lengths ? '<div class="price-table__bar"><span>Длина волос</span><div data-len class="seg"></div></div>' : ''}
+          <div data-table></div>
+        </div>
+      </div>`;
+    const draw = () => { mount.querySelector('[data-table]').innerHTML = table(c, len); UI.fixLinks(mount); };
     if (c.lengths) tabs(mount.querySelector('[data-len]'), LEN.map(([v, l]) => ({ v, l })), len, v => { len = v; draw(); });
     draw();
   }
-  const catCard = c => `
+
+  const catCard = (c, n) => `
     <a class="cat-card" href="services.html?cat=${c.slug}">
-      <div class="cat-card__top"><span class="cat-card__letter">${LETTERS[c.slug] || ''}</span><span class="cat-card__count">${count(c)} ${plural(count(c), 'услуга', 'услуги', 'услуг')}</span></div>
-      <div><h2>${e(plainTitle(c))}</h2><p>${e(lead(c))}</p></div>
+      <div class="cat-card__top"><span class="cat-card__num">${String(n + 1).padStart(2, '0')}</span><span class="cat-card__count">${count(c)} ${plural(count(c), 'услуга', 'услуги', 'услуг')}</span></div>
+      <div>
+        <h2>${e(catTitle(c))}</h2>
+        <ul class="cat-card__list">${items(c).filter(i => i.slug).slice(0, 3).map(i => `<li>${e(i.name)}</li>`).join('')}</ul>
+        <p class="cat-card__from">от ${rub(minPrice(c))}</p>
+      </div>
     </a>`;
 
   const cat = SERVICE_CATEGORIES.find(c => c.slug === param('cat'));
@@ -52,25 +68,22 @@
       <section class="block block--tight"><div class="cat-grid">${SERVICE_CATEGORIES.map(catCard).join('')}</div></section>
       <section class="block" aria-labelledby="price-h">
         <div class="block__head"><div><h2 class="h-section" id="price-h">Прайс-лист</h2><p>Выберите направление и длину волос</p></div></div>
-        <div data-cat-tabs style="padding:0 var(--gutter);margin-bottom:12px"></div>
+        <div data-cat-tabs class="price-cats"></div>
         <div data-prices></div>
-      </section>
-      <section class="block cta"><h2>Не знаете, какую услугу выбрать? <em>Запишитесь на консультацию</em> — колорист подберёт технику и цвет.</h2><a class="btn" href="#book">Записаться</a></section>`;
+      </section>`;
     const mount = app.querySelector('[data-prices]');
-    const catTabs = app.querySelector('[data-cat-tabs]');
-    tabs(catTabs, SERVICE_CATEGORIES.map(c => ({ v: c.slug, l: plainTitle(c), n: count(c) })), SERVICE_CATEGORIES[0].slug,
+    tabs(app.querySelector('[data-cat-tabs]'), SERVICE_CATEGORIES.map(c => ({ v: c.slug, l: catTitle(c), n: count(c) })), SERVICE_CATEGORIES[0].slug,
       v => priceBlock(SERVICE_CATEGORIES.find(c => c.slug === v), mount));
-    catTabs.style.marginTop = '0';
     priceBlock(SERVICE_CATEGORIES[0], mount);
     return;
   }
 
-  // ---------- Категория ----------
+  // ---------- Направление ----------
   const about = SERVICE_ABOUT[cat.slug] || {};
   document.title = `${cat.title} — цены в Colba Color Bar`;
   app.innerHTML = `
-    ${head({ title: e(cat.title), lead: e(lead(cat)), crumbs: [['Услуги', 'services.html'], [plainTitle(cat)]],
-      extra: `<div class="page-head__actions"><a class="btn" href="#book">Записаться</a><a class="btn btn--ghost" href="#about">О процедуре</a></div>` })}
+    ${head({ title: e(cat.title), lead: e(firstSentence(cat)), crumbs: [['Услуги', 'services.html'], [catTitle(cat)]],
+      extra: `<div class="page-head__actions"><a class="btn" href="#book">Записаться</a>${about.about ? '<a class="btn btn--ghost" href="#about">О процедуре</a>' : ''}</div>` })}
     <section class="block block--tight" aria-label="Цены"><div data-prices></div></section>
     ${about.photos?.length ? `
     <section class="block" aria-labelledby="works-h">
@@ -80,15 +93,15 @@
     </section>` : ''}
     ${about.about ? `
     <section class="block" id="about" aria-labelledby="about-h">
-      <div class="panel">
-        <h2 class="h-section" id="about-h" style="margin-bottom:24px">О процедуре</h2>
-        <div class="prose prose--wide more is-collapsed" data-more>${about.about}</div>
-        <button class="btn btn--ghost more-btn" type="button" data-more-btn>Читать полностью</button>
+      <div class="panel reading">
+        <h2 class="h-section" id="about-h">О процедуре</h2>
+        <div><div class="prose more is-collapsed" data-more>${about.about}</div>
+        <button class="btn btn--ghost more-btn" type="button" data-more-btn>Читать полностью</button></div>
       </div>
     </section>` : ''}
     <section class="block" aria-labelledby="other-h">
-      <div class="block__head"><h2 class="h-section" id="other-h">Другие направления</h2></div>
-      <div class="cat-grid">${SERVICE_CATEGORIES.filter(c => c !== cat).slice(0, 3).map(catCard).join('')}</div>
+      <div class="block__head"><h2 class="h-section" id="other-h">Другие направления</h2><a class="link-more" href="services.html">Все услуги</a></div>
+      <div class="cat-grid">${SERVICE_CATEGORIES.map((c, n) => [c, n]).filter(([c]) => c !== cat).slice(0, 3).map(([c, n]) => catCard(c, n)).join('')}</div>
     </section>`;
   priceBlock(cat, app.querySelector('[data-prices]'));
   const more = app.querySelector('[data-more]'), btn = app.querySelector('[data-more-btn]');

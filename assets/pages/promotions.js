@@ -18,7 +18,7 @@ const PROMOTIONS = [
     </a>`;
   const certificate = `
     <a class="card cert-card" href="certificates.html">
-      <div class="card__img"><img src="https://colbacolorbar.ru/themes/colba-redesign/assets/images/page-certificate.webp" alt="" loading="lazy"></div>
+      <div class="card__img cert-visual"><img src="https://colbacolorbar.ru/themes/colba-redesign/assets/images/page-certificate.webp" alt="" loading="lazy"></div>
       <p class="card__meta">Подарок</p><h3>Подарочный сертификат на услуги Colba</h3>
     </a>`;
   const p = PROMOTIONS.find(x => x.id == param('id'));

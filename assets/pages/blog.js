@@ -15,7 +15,7 @@ const blogCard = p => `
 
   app.innerHTML = `
     ${head({ title: 'Блог', crumbs: [['О Colba', 'about.html'], ['Блог']], lead: 'Статьи колористов Colba об окрашивании, уходе, укладках и трендах.', extra: '<div data-tabs></div>' })}
-    <section class="block block--tight"><div class="cards" data-list></div><div class="load-more" data-more></div></section>`;
+    <section class="block block--tight"><div class="cards blog-cards" data-list></div><div class="load-more" data-more></div></section>`;
 
   const list = app.querySelector('[data-list]'), more = app.querySelector('[data-more]');
   const count = c => BLOG.filter(p => c === 'all' || p.cats.includes(c)).length;

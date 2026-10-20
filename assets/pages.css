@@ -324,3 +324,108 @@ html { scroll-padding-top: 80px; }
   .cards.products .card__price { font-size: 15px; }
   .cards.products .card__img { border-radius: 16px; margin-bottom: 12px; }
 }
+
+/* ===== Правки арт-директора ===== */
+/* Переключатель длины волос — сегмент внутри панели прайса */
+.price-table__bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 20px; padding: 18px 0 14px; border-bottom: 1px solid #e6eeeb; }
+.price-table__bar > span { font: 500 13px var(--font-head); text-transform: uppercase; letter-spacing: .06em; color: var(--ink-soft); }
+.seg.filters { margin: 0; gap: 4px; padding: 4px; border-radius: 99px; background: var(--bg); flex-wrap: nowrap; }
+.seg.filters button { border: 0; padding: 10px 22px; font-size: 15px; }
+.seg.filters button:not([aria-pressed="true"]):hover { background: #fff; }
+.price-table__bar + [data-table] > h3:first-child { margin-top: 22px; }
+
+/* Шапка страницы не должна обрезать выпадающие фильтры */
+.page-head { overflow: visible; z-index: 3; }
+.dd__menu { z-index: 30; max-height: 360px; }
+
+/* Фото в карточках — фокус выше центра, чтобы не резать головы */
+.card__img img, .promo__img img, .works img, .gallery img, .photo-grid img { object-position: 50% 22%; }
+
+/* Текст + фото одной высоты (без «дыры» под коротким текстом) */
+.duo { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 18px; align-items: stretch; }
+.duo > .panel { display: flex; flex-direction: column; justify-content: center; }
+.duo > .media-cover { position: relative; min-height: 380px; }
+.duo > .media-cover img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
+@media (max-width: 860px) { .duo { grid-template-columns: 1fr; } .duo > .media-cover { min-height: 0; aspect-ratio: 4 / 3; } }
+
+/* Основатели — компактные круглые портреты (исходники 153 px) */
+.founder-card .founder { width: 104px; aspect-ratio: 1 !important; border-radius: 50%; }
+.founder-card .founder img { transform: scale(1.5); transform-origin: 50% 42%; }
+.card.founder-card:hover .founder img { transform: scale(1.5); }
+.founder-card { padding: 22px 28px; }
+
+/* Сертификат — вертикальная картинка 332 px: показываем целиком на мягком фоне, не растягиваем */
+.cert-visual { display: grid; place-items: center; background: radial-gradient(circle at 30% 30%, #fff, #dfe8e5 70%); }
+.cert-visual img { width: auto !important; height: auto !important; max-width: 70%; max-height: 92%; object-fit: contain !important; filter: drop-shadow(0 20px 30px rgba(45,42,42,.18)); }
+.media-cover.cert-visual { min-height: 420px; padding: 32px; }
+.media-cover.cert-visual img { max-height: 560px; max-width: 332px; }
+
+/* Блог — вертикальные обложки (исходники портретные), 4 в ряд */
+.cards.blog-cards { --cols: 4; }
+@media (max-width: 1300px) { .cards.blog-cards { --cols: 3 !important; } }
+@media (max-width: 900px) { .cards.blog-cards { --cols: 2 !important; } }
+@media (max-width: 520px) { .cards.blog-cards { --cols: 1 !important; } }
+.blog-cards .card__img { aspect-ratio: 4 / 5; }
+.blog-cards .card__img img { object-position: 50% 15%; }
+
+/* Каталог — 5 в ряд на широком экране, товар с воздухом вокруг */
+@media (min-width: 1500px) { .cards.products { --cols: 5; } }
+.card__img--square img { padding: 12%; }
+
+/* Команда — 5 в ряд на широком экране (фото мастеров не растягиваются) */
+@media (min-width: 1500px) { .team { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+
+/* Статья: заголовок + вертикальное фото */
+.post-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(260px, 380px); gap: 18px; }
+.post-head__text { display: flex; flex-direction: column; justify-content: flex-end; }
+.post-head__tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: auto; padding-bottom: 32px; }
+.post-head__tags a { padding: 8px 16px; border-radius: 99px; background: rgba(255,255,255,.75); font-size: 14px; transition: background .2s, color .2s; }
+.post-head__tags a:hover { background: var(--ink); color: #fff; }
+.post-head__title { font: 600 clamp(26px, 3.4vw, 52px)/1.08 var(--font-head); margin: 0 0 18px; max-width: 900px; }
+.post-head__date { margin: 0; color: var(--ink-soft); font-size: 14px; }
+.post-head__img { aspect-ratio: 4 / 5; }
+.post-head__img img { object-position: 50% 15%; }
+@media (max-width: 760px) { .post-head { grid-template-columns: 1fr; } .post-head__img { max-width: 420px; } }
+
+/* Карточки направлений: номер, состав, цена «от» */
+.cat-card__num { font: 500 14px var(--font-head); opacity: .45; letter-spacing: .04em; }
+.cat-card__list { list-style: none; margin: 0 0 18px; padding: 0; display: grid; gap: 4px; font-size: 14px; opacity: .72; }
+.cat-card__list li::before { content: '— '; }
+.cat-card__from { margin: 0 !important; font: 600 18px var(--font-head); opacity: 1 !important; }
+.cat-card h2 { margin-bottom: 14px; }
+
+/* Прайс в две колонки: сводка + таблица */
+.price-cats { margin-bottom: 18px; }
+.price-layout { display: grid; grid-template-columns: minmax(260px, 340px) minmax(0, 1fr); gap: 18px; align-items: start; }
+.price-aside { position: sticky; top: 80px; border-radius: var(--radius); padding: 30px; color: #fff; overflow: hidden; isolation: isolate; background: #4a3e4f; display: grid; gap: 14px; justify-items: start; }
+.price-aside::before { content: ''; position: absolute; inset: 0; z-index: -1; --bga-color-1: #296477; --bga-color-2: #893d50; --bga-color-3: #7a126a; --bga-color-4: #727352; animation: bga 40s linear infinite; }
+.price-aside__kicker { margin: 0; font: 500 12px var(--font-head); text-transform: uppercase; letter-spacing: .08em; opacity: .7; }
+.price-aside__title { margin: 0; font: 600 clamp(22px, 2vw, 30px)/1.15 var(--font-head); }
+.price-aside__from { margin: 0; font-size: 16px; opacity: .85; }
+.price-aside__from b { font: 600 26px var(--font-head); opacity: 1; }
+.price-aside__note { margin: 4px 0 8px; font-size: 14px; line-height: 1.5; opacity: .8; }
+.price-aside .btn { width: 100%; }
+.price-aside__call { font-size: 13px; opacity: .75; }
+.price-aside__call:hover { opacity: 1; }
+.price-layout .price-table { padding-top: 0; }
+.price-layout .price-table > [data-table] > h3:first-child { margin-top: 24px; }
+@media (max-width: 900px) { .price-layout { grid-template-columns: 1fr; } .price-aside { position: static; } }
+
+/* Длинный текст: заголовок слева, колонка текста удобной ширины справа */
+.reading { display: grid; grid-template-columns: minmax(200px, 1fr) minmax(0, 2.4fr); gap: 24px 48px; }
+.reading > .h-section { margin: 0; }
+.reading .prose { max-width: 760px; }
+.reading.more-bg .more.is-collapsed::after { background: linear-gradient(rgba(255,255,255,0), #fff); }
+@media (max-width: 860px) { .reading { grid-template-columns: 1fr; } }
+
+/* Акцентные абзацы */
+.note-line { margin: 28px var(--gutter) 0; padding-left: 20px; border-left: 3px solid var(--accent); max-width: 860px; font: 500 clamp(16px, 1.4vw, 19px)/1.5 var(--font-head); }
+.lead-panel { margin-bottom: 18px; }
+.lead-panel p { margin: 0; max-width: 980px; font: 500 clamp(16px, 1.5vw, 21px)/1.5 var(--font-head); }
+.cert-visual img { mix-blend-mode: multiply; filter: none !important; }
+@media (max-width: 560px) {
+  .seg.filters { width: 100%; }
+  .seg.filters button { flex: 1; padding: 9px 8px; font-size: 14px; justify-content: center; }
+  .price-table__bar > span { display: none; }
+  .price-aside { padding: 24px; }
+}

@@ -10,7 +10,7 @@
         <p class="page-head__lead">Идеальная формула красоты — подарок, который порадует каждого.</p>
         <div class="page-head__actions"><a class="btn" href="${BUY}" target="_blank" rel="noopener">Выбрать сертификат</a><a class="btn btn--ghost" href="tel:+74991102210">Купить по телефону</a></div>
       </div>
-      <div class="media-cover" style="aspect-ratio:1"><img src="https://colbacolorbar.ru/themes/colba-redesign/assets/images/page-certificate.webp" alt="Подарочный сертификат Colba"></div>
+      <div class="media-cover cert-visual"><img src="https://colbacolorbar.ru/themes/colba-redesign/assets/images/page-certificate.webp" alt="Подарочный сертификат Colba"></div>
     </section>
 
     <section class="block" aria-labelledby="adv-h">

@@ -15,7 +15,7 @@
     <section class="block" aria-labelledby="coll-h">
       <div class="block__head"><h2 class="h-section" id="coll-h">Наши коллекции</h2><a class="link-more" href="collections.html">Все коллекции</a></div>
       <div class="cards" style="--cols:3">${COLLECTIONS.slice(0, 3).map(c => `
-        <a class="card" href="collections.html?id=${c.slug}"><div class="card__img card__img--tall"><img src="${img(c.cover)}" alt="" loading="lazy"></div><h3>${e(c.title)}</h3></a>`).join('')}</div>
+        <a class="card" href="collections.html?id=${c.slug}"><div class="card__img card__img--tall"><img src="${img(c.photos[0] || c.cover)}" alt="" loading="lazy"></div><h3>${e(c.title)}</h3></a>`).join('')}</div>
     </section>`;
 
   const grid = app.querySelector('[data-grid]');
@@ -57,7 +57,7 @@
     filtersEl.hidden = tab === 'video';
     if (tab === 'video') {
       grid.innerHTML = `<div class="photo-grid photo-grid--video" style="--cols:3">${GALLERY_VIDEOS.map(id => `
-        <a class="video-tile" href="https://www.youtube.com/watch?v=${id}" data-video="${id}" data-group="gal"><img src="https://i.ytimg.com/vi_webp/${id}/maxresdefault.webp" alt="Видео работы" loading="lazy"></a>`).join('')}</div>`;
+        <a class="video-tile" href="https://www.youtube.com/watch?v=${id}" data-video="${id}" data-group="gal"><img src="https://i.ytimg.com/vi/${id}/hqdefault.jpg" alt="Видео работы" loading="lazy"></a>`).join('')}</div>`;
       more.innerHTML = '';
       return;
     }

@@ -121,6 +121,17 @@ const UI = (() => {
     lightbox(group.map(x => ({ src: x.href })), Math.max(0, group.indexOf(a)));
   });
 
+  // Видео, которых больше нет на YouTube, отдают заглушку 120×90 — прячем плитку, а пустой блок целиком
+  const dropDeadVideo = ev => {
+    const i = ev.target;
+    if (i.tagName !== 'IMG' || !i.closest('.video-tile') || (ev.type === 'load' && i.naturalWidth > 120)) return;
+    const grid = i.closest('.photo-grid');
+    i.closest('.video-tile').remove();
+    if (grid && !grid.querySelector('.video-tile')) (grid.closest('[data-video-block]') || grid).remove();
+  };
+  document.addEventListener('load', dropDeadVideo, true);
+  document.addEventListener('error', dropDeadVideo, true);
+
   // ---------- Формы-заявки ----------
   // <form data-demo="Текст успеха"> — проверка полей и согласия, без отправки на сервер (прототип)
   const consent = (text = 'Соглашаюсь с <a href="policy.html" target="_blank">политикой конфиденциальности</a> и даю согласие на обработку персональных данных ООО «Колба».') => `
