@@ -17,6 +17,18 @@
   const order = ['short', 'mid', 'long', 'one'];
   prices.sort((a, b) => order.indexOf(a[0]) - order.indexOf(b[0]));
   const others = cat ? cat.groups.flatMap(g => g.items).filter(i => i.slug && i.slug !== s.slug) : [];
+  // Карточка услуги с фото: своё фото услуги, иначе — фото направления (разное для соседних карточек)
+  const catPhotos = SERVICE_ABOUT[s.cat]?.photos || [];
+  const serviceCard = (i, k) => {
+    const own = SERVICES[i.slug]?.photos?.[0];
+    const pic = own || catPhotos[k % Math.max(catPhotos.length, 1)];
+    const v = Object.values(i.price).filter(x => x != null);
+    return `<a class="svc-card" href="service.html?id=${e(i.slug)}">
+      <div class="svc-card__img">${pic ? `<img src="${img(pic)}" alt="" loading="lazy">` : ''}</div>
+      <h3>${e(i.name)}</h3>
+      <p>${v.length ? `<b>от ${rub(Math.min(...v))}</b>` : ''}${Object.values(i.time)[0] ? `<span>${e(Object.values(i.time)[0])}</span>` : ''}</p>
+    </a>`;
+  };
   const minP = prices.length ? Math.min(...prices.map(p => p[1])) : null;
 
   app.innerHTML = `
@@ -56,10 +68,8 @@
     ${others.length ? `
     <section class="block" aria-labelledby="more-h">
       <div class="block__head"><h2 class="h-section" id="more-h">Другие услуги: ${e(UI.catTitle(cat).toLowerCase())}</h2><a class="link-more" href="services.html?cat=${s.cat}">Весь прайс</a></div>
-      <div class="price-table">${others.slice(0, 8).map(i => {
-        const v = Object.values(i.price).filter(x => x != null);
-        return `<a class="price-row" href="service.html?id=${e(i.slug)}"><span class="price-row__name">${e(i.name)}</span><span class="price-row__time">${e(Object.values(i.time)[0] || '')}</span><span class="price-row__price">${v.length ? 'от ' + rub(Math.min(...v)) : ''}</span></a>`;
-      }).join('')}</div>
+      <div class="rail rail--six" id="moreSvc">${others.map((i, k) => serviceCard(i, k)).join('')}</div>
+      ${arrows('moreSvc')}
     </section>` : ''}`;
   UI.fixLinks(app);
   initRails(app);

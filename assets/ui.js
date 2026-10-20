@@ -132,6 +132,20 @@ const UI = (() => {
   document.addEventListener('load', dropDeadVideo, true);
   document.addEventListener('error', dropDeadVideo, true);
 
+  // Длинные отзывы сворачиваем до 5 строк с кнопкой «Читать полностью» — карточки не растягиваются
+  function clampReviews(root = document) {
+    $$('.review > p:not([data-clamp])', root).forEach(p => {
+      p.dataset.clamp = 1;
+      if (p.textContent.length < 180) return;
+      p.classList.add('is-clamped');
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'review__more'; b.textContent = 'Читать полностью';
+      b.onclick = () => { const open = p.classList.toggle('is-clamped'); b.textContent = open ? 'Читать полностью' : 'Свернуть'; };
+      p.after(b);
+    });
+  }
+  new MutationObserver(() => clampReviews()).observe(document.documentElement, { childList: true, subtree: true });
+
   // ---------- Формы-заявки ----------
   // <form data-demo="Текст успеха"> — проверка полей и согласия, без отправки на сервер (прототип)
   const consent = (text = 'Соглашаюсь с <a href="policy.html" target="_blank">политикой конфиденциальности</a> и даю согласие на обработку персональных данных ООО «Колба».') => `

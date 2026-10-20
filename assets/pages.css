@@ -429,3 +429,49 @@ html { scroll-padding-top: 80px; }
   .price-table__bar > span { display: none; }
   .price-aside { padding: 24px; }
 }
+
+/* Карточка услуги с фото (блок «Другие услуги») */
+.svc-card { display: flex; flex-direction: column; background: var(--card); border-radius: var(--photo-radius); padding: 8px 8px 18px; transition: transform .25s; }
+.svc-card:hover { transform: translateY(-3px); }
+.svc-card__img { aspect-ratio: 4 / 5; border-radius: 18px; overflow: hidden; background: #dde6e3; margin-bottom: 14px; }
+.svc-card__img img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 22%; transition: transform .6s; }
+.svc-card:hover .svc-card__img img { transform: scale(1.04); }
+.svc-card h3 { margin: 0 8px 8px; font: 600 15px/1.3 var(--font-head); overflow-wrap: anywhere; transition: color .2s; }
+.svc-card:hover h3 { color: var(--accent); }
+.svc-card p { margin: auto 8px 0; display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; font-size: 13px; color: var(--ink-soft); }
+.svc-card p b { font: 600 15px var(--font-head); color: var(--ink); }
+
+/* Отзывы: карточка по высоте своего текста, длинные — свёрнуты */
+.rail.reviews { align-items: start; }
+.review p.is-clamped { display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden; }
+.review__more { align-self: flex-start; border: 0; background: none; padding: 0; color: var(--accent); font: 500 13px var(--font-head); cursor: pointer; border-bottom: 1px solid; }
+
+/* Основатели: вписанный в шестиугольник круг — без увеличения, лицо целиком */
+.founder-card .founder img, .card.founder-card:hover .founder img { transform: none; object-position: 50% 50%; }
+
+/* «О нас»: основатели — одна панель: слева история, справа люди */
+.kicker { margin: 0 0 14px; font: 500 12px var(--font-head); text-transform: uppercase; letter-spacing: .1em; color: var(--accent); }
+.founders { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: clamp(28px, 4vw, 64px); background: var(--card); border-radius: var(--radius); padding: clamp(28px, 4vw, 56px); }
+.founders__intro .h-section { margin-bottom: 20px; }
+.founders__intro p:last-child { margin: 0; font-size: 17px; line-height: 1.6; color: var(--ink-soft); max-width: 520px; }
+.founders__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; align-content: center; }
+.founders__list li { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 22px; align-items: start; padding: 22px 0; border-top: 1px solid #e6eeeb; }
+.founders__list li:first-child { border-top: 0; padding-top: 0; }
+.founders__list li:last-child { padding-bottom: 0; }
+.founders__list .founder { width: 96px; height: 96px; border-radius: 50%; overflow: hidden; background: #dde6e3; }
+.founders__list .founder img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
+.founders__list h3 { margin: 4px 0 4px; font: 600 18px/1.25 var(--font-head); }
+.founders__role { margin: 0 0 8px; font-size: 14px; color: var(--accent); }
+.founders__list p:last-child { margin: 0; font-size: 15px; color: var(--ink-soft); line-height: 1.55; }
+@media (max-width: 860px) { .founders { grid-template-columns: 1fr; } }
+
+/* Миссия и история — две карточки с крупным заголовком */
+.pillars { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.pillar { background: var(--card); border-radius: var(--radius); padding: clamp(28px, 3.4vw, 48px); display: flex; flex-direction: column; }
+.pillar h3 { margin: 0 0 18px; font: 600 clamp(32px, 4vw, 60px)/1 var(--font-head); letter-spacing: -.01em; }
+.pillar p:last-child { margin: 0; font-size: 16px; line-height: 1.6; color: var(--ink-soft); max-width: 560px; }
+.pillar--dark { position: relative; overflow: hidden; isolation: isolate; background: #4a3e4f; color: #fff; }
+.pillar--dark::before { content: ''; position: absolute; inset: 0; z-index: -1; --bga-color-1: #296477; --bga-color-2: #893d50; --bga-color-3: #7a126a; --bga-color-4: #727352; animation: bga 40s linear infinite; }
+.pillar--dark .kicker { color: #f3c2b6; }
+.pillar--dark p:last-child { color: rgba(255,255,255,.82); }
+@media (max-width: 760px) { .pillars { grid-template-columns: 1fr; } }
