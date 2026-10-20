@@ -32,10 +32,10 @@
     <section class="block" id="founders" aria-labelledby="f-h">
       <div class="block__head"><div><h2 class="h-section" id="f-h">Основатели проекта</h2><p>Два элемента встретились, и случилась химия</p></div></div>
       <div class="cards" style="--cols:2">
-        <article class="card"><div class="card__img card__img--tall" style="aspect-ratio:4/5"><img src="${T}founder-1.png" alt="Василий Михайлов" loading="lazy"></div>
-          <h3>Василий Михайлов</h3><p>Предприниматель из Москвы. Основатель лаборатории Colba и сети франчайзинговых парикмахерских «Супермен». Преподавал парикмахерское искусство в академии «Долорес». Победитель международных конкурсов Trend Vision Award и Hairdressing Award.</p></article>
-        <article class="card"><div class="card__img card__img--tall" style="aspect-ratio:4/5"><img src="${T}founder-2.png" alt="Анастасия Попова" loading="lazy"></div>
-          <h3>Анастасия Попова</h3><p>Основатель лаборатории Colba. Инвестор. Тревел-блогер и мать троих детей.</p></article>
+        <article class="card founder-card"><div class="card__img card__img--tall founder" style="aspect-ratio:4/5"><img src="${T}founder-1.png" alt="Василий Михайлов" loading="lazy"></div>
+          <div><h3>Василий Михайлов</h3><p>Предприниматель из Москвы. Основатель лаборатории Colba и сети франчайзинговых парикмахерских «Супермен». Преподавал парикмахерское искусство в академии «Долорес». Победитель международных конкурсов Trend Vision Award и Hairdressing Award.</p></div></article>
+        <article class="card founder-card"><div class="card__img card__img--tall founder" style="aspect-ratio:4/5"><img src="${T}founder-2.png" alt="Анастасия Попова" loading="lazy"></div>
+          <div><h3>Анастасия Попова</h3><p>Основатель лаборатории Colba. Инвестор. Тревел-блогер и мать троих детей.</p></div></article>
       </div>
       <p class="block__head" style="margin-top:20px;color:var(--ink-soft)">На свет появился колор-бар ColBa — уникальный проект для женщин, которые ценят комфорт и качество в каждой минуте своего времени. И теперь наша цель — делиться формулой успеха и применять её в других городах.</p>
     </section>

@@ -26,7 +26,7 @@ const PROMOTIONS = [
   if (!p) {
     app.innerHTML = `
       ${head({ title: 'Акции', crumbs: [['Акции']], lead: 'Специальные предложения салона Colba Color Bar.' })}
-      <section class="block block--tight"><div class="cards">${PROMOTIONS.map(card).join('')}${certificate}</div></section>`;
+      <section class="block block--tight"><div class="cards" style="--cols:4">${PROMOTIONS.map(card).join('')}${certificate}</div></section>`;
     return;
   }
 

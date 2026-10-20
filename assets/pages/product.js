@@ -13,7 +13,7 @@
 
   app.innerHTML = `
     ${crumbs([['Каталог косметики', 'products.html'], [brand?.title || '', `products.html?brand=${p.brand}`], [p.title]])}
-    <section class="split">
+    <section>
       <div class="panel product">
         <div class="product__img"><img src="${img(p.img)}" alt="${e(p.title)}"></div>
         <div>
@@ -25,11 +25,11 @@
           <button class="btn" type="button" data-reserve>Зарезервировать</button>
         </div>
       </div>
-      <aside class="panel prose" style="max-width:none">
+      </section>
+    <section class="block block--tight panel"><div class="prose prose--wide">
         <h2 style="margin-top:0">Описание</h2>
         ${p.text || '<p>Подробнее о средстве расскажет мастер или администратор.</p>'}
-      </aside>
-    </section>
+      </div></section>
     ${same.length ? `
     <section class="block" aria-labelledby="same-h">
       <div class="block__head"><h2 class="h-section" id="same-h">Ещё ${e(brand?.title || '')}</h2><a class="link-more" href="products.html?brand=${p.brand}">Все средства бренда</a></div>

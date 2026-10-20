@@ -41,6 +41,6 @@
   const body = app.querySelector('[data-body]');
   fetch(`assets/data/blog/${encodeURIComponent(p.slug)}.json`)
     .then(r => (r.ok ? r.json() : Promise.reject(r.status)))
-    .then(d => { body.innerHTML = ((d.intro || '') + (d.html || '')).replaceAll('UPLOADS/', UI.UP) || '<p>Текст статьи скоро появится.</p>'; UI.fixLinks(body); })
+    .then(d => { const intro = (d.intro || '').trim(); body.innerHTML = ((intro && !intro.startsWith('<') ? `<p>${intro}</p>` : intro) + (d.html || '')).replaceAll('UPLOADS/', UI.UP) || '<p>Текст статьи скоро появится.</p>'; UI.fixLinks(body); })
     .catch(() => { body.innerHTML = '<p>Не удалось загрузить статью. Обновите страницу.</p>'; });
 })();

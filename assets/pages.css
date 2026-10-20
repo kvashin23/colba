@@ -166,8 +166,8 @@ a.price-row:hover .price-row__name { color: var(--accent); }
 .check.is-error { color: var(--accent); }
 .lead-form .btn, form[data-demo] > .btn { justify-self: start; }
 .radio-row { display: flex; flex-wrap: wrap; gap: 8px; }
-.radio-row label { cursor: pointer; }
-.radio-row input { position: absolute; opacity: 0; }
+.radio-row label { cursor: pointer; position: relative; }
+.radio-row input { position: absolute; inset: 0; opacity: 0; width: 100%; height: 100%; margin: 0; }
 .radio-row span { display: inline-block; padding: 10px 16px; border-radius: 99px; border: 1px solid rgba(45,41,42,.25); font-size: 14px; }
 .radio-row input:checked + span { background: var(--ink); color: #fff; border-color: var(--ink); }
 .radio-row input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
@@ -176,7 +176,8 @@ a.price-row:hover .price-row__name { color: var(--accent); }
 .done__icon::before { content: ''; position: absolute; inset: 0; z-index: -1; animation: bga 40s linear infinite; }
 .done p { margin: 0; font-size: 18px; max-width: 420px; }
 .rate { display: flex; flex-direction: row-reverse; justify-content: flex-end; gap: 4px; }
-.rate input { position: absolute; opacity: 0; pointer-events: none; }
+.rate { position: relative; }
+.rate input { position: absolute; left: 0; top: 0; opacity: 0; pointer-events: none; }
 .rate label { font-size: 28px; color: #d6dcda; cursor: pointer; transition: color .15s; }
 .rate input:checked ~ label, .rate label:hover, .rate label:hover ~ label { color: var(--accent); }
 
@@ -250,7 +251,7 @@ a.price-row:hover .price-row__name { color: var(--accent); }
 .quiz__hint { margin: -14px 0 0; color: var(--ink-soft); font-size: 14px; }
 .quiz__options { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
 .quiz__opt { position: relative; cursor: pointer; }
-.quiz__opt input { position: absolute; opacity: 0; }
+.quiz__opt input { position: absolute; inset: 0; opacity: 0; margin: 0; }
 .quiz__opt span { display: grid; gap: 10px; border: 2px solid transparent; border-radius: 26px; padding: 6px 6px 14px; background: var(--card); transition: border-color .2s; }
 .quiz__opt img { aspect-ratio: 3 / 4; width: 100%; object-fit: cover; border-radius: 20px; }
 .quiz__opt em { font-style: normal; text-align: center; font-size: 15px; }
@@ -299,3 +300,27 @@ html { scroll-padding-top: 80px; }
 @media (max-width: 560px) { .doc { grid-template-columns: auto 1fr; } .doc__go { display: none; } }
 
 .btn:disabled { opacity: .4; cursor: default; transform: none; box-shadow: none; }
+
+/* Фото основателей на сайте вырезаны шестиугольником — увеличиваем, чтобы прозрачные углы ушли за рамку */
+.founder img { transform: scale(1.42); transform-origin: 50% 45%; }
+.card:hover .founder img { transform: scale(1.48); }
+.founder-card { flex-direction: row; align-items: center; gap: 22px; padding: 14px 24px 14px 14px; }
+.founder-card .founder { flex: none; width: 150px; margin: 0; }
+.founder-card h3 { margin: 0 0 8px; }
+.founder-card p { margin: 0; }
+@media (max-width: 520px) { .founder-card { flex-direction: column; align-items: flex-start; padding-right: 14px; } .founder-card h3, .founder-card p { margin-left: 10px; margin-right: 10px; } }
+.product h1 { overflow-wrap: anywhere; }
+.product { grid-template-columns: minmax(0, 420px) minmax(0, 1fr); }
+@media (max-width: 640px) { .product { grid-template-columns: 1fr; } }
+
+/* Длинные названия без пробелов (Shimmer.Me.Blonde) не должны растягивать страницу */
+.card h3, .product h1, .price-row__name, .book__row span { overflow-wrap: anywhere; hyphens: auto; }
+@media (max-width: 560px) {
+  .cards.products { gap: 10px; }
+  .cards.products .card { padding: 8px 8px 16px; border-radius: 22px; }
+  .cards.products .card h3 { font-size: 13px; margin: 0 6px; }
+  .cards.products .card__meta { margin: 0 6px 6px; font-size: 12px; }
+  .cards.products .card__foot { margin: auto 6px 0; }
+  .cards.products .card__price { font-size: 15px; }
+  .cards.products .card__img { border-radius: 16px; margin-bottom: 12px; }
+}
