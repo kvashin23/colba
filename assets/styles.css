@@ -52,7 +52,7 @@ button { font: inherit; color: inherit; }
 .nav__dropdown a { padding: 9px 12px; border-radius: 12px; transition: background .15s, color .15s; }
 .nav__dropdown a:hover { background: var(--bg); color: var(--accent); }
 .nav__dropdown a.is-all { margin-top: 4px; border-top: 1px solid #e6eeeb; border-radius: 0 0 12px 12px; font: 500 12px var(--font-head); padding-top: 12px; }
-@media (hover: hover) and (min-width: 981px) {
+@media (hover: hover) and (min-width: 1200px) {
   .nav__item--drop:hover .nav__dropdown, .nav__item--drop:focus-within .nav__dropdown { opacity: 1; visibility: visible; transform: none; }
   .nav__item--drop:hover .nav__chevron, .nav__item--drop:focus-within .nav__chevron { transform: rotate(180deg); }
 }
@@ -66,7 +66,7 @@ button { font: inherit; color: inherit; }
 .is-open .burger span:last-child { top: 19px; transform: rotate(-45deg); }
 .no-scroll { overflow: hidden; }
 
-@media (max-width: 980px) {
+@media (max-width: 1199px) {
   .site-header { padding: 0 16px 0 20px; }
   .site-phone { margin-left: auto; }
   .burger { display: block; }
@@ -184,7 +184,7 @@ button { font: inherit; color: inherit; }
   position: relative; overflow: hidden;
   border-radius: var(--radius);
   padding: clamp(40px, 6vw, 80px) var(--gutter) 28px;
-  background: #e8eef0 url('https://colbacolorbar.ru/themes/colba-redesign//assets/images/page-team-head-bg.webp') center / cover;
+  background: #e8eef0 url('img/site/page-team-head-bg.webp') center / cover;
 }
 
 /* Табы как на colbacolorbar.ru: контурные «таблетки», у активной — тёмный переливающийся градиент */
@@ -421,3 +421,29 @@ button { font: inherit; color: inherit; }
 
 /* Карусель: не больше колонок, чем карточек (--n) — без пустых мест */
 .rail--six { grid-auto-columns: calc((100% - (min(var(--cols), var(--n, 99)) - 1) * var(--gap)) / min(var(--cols), var(--n, 99))); }
+
+/* Бургер виден всегда; на широком экране открывает большое меню со всеми страницами */
+.burger { display: block; flex: none; }
+@media (min-width: 1200px) {
+  .site-phone { margin-left: 0; }
+  .site-header { gap: 20px; }
+  .site-header { justify-content: flex-start; }
+  .site-nav { margin: 0 auto; }
+}
+.mega {
+  position: fixed; top: 62px; left: 0; right: 0; z-index: 19;
+  background: #fff; border-bottom: 1px solid var(--ink); box-shadow: 0 30px 50px -30px rgba(45, 42, 42, .35);
+  padding: 36px 28px 40px; max-height: calc(100vh - 62px); overflow: auto;
+  opacity: 0; visibility: hidden; transform: translateY(-8px); transition: opacity .2s, transform .2s, visibility .2s;
+}
+.is-mega .mega { opacity: 1; visibility: visible; transform: none; }
+.is-mega .burger span:first-child { top: 19px; transform: rotate(45deg); }
+.is-mega .burger span:last-child { top: 19px; transform: rotate(-45deg); }
+.mega__grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 28px; max-width: 1600px; margin: 0 auto; }
+.mega__col { display: grid; align-content: start; gap: 9px; font-size: 15px; }
+.mega__col a:not(.btn):hover { color: var(--accent); }
+.mega__title { font: 600 12px var(--font-head); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }
+.mega__contacts p { margin: 0 0 6px; color: var(--ink-soft); font-size: 14px; line-height: 1.5; }
+.mega__phone { font: 600 15px var(--font-head); }
+.mega__contacts .btn { margin-top: 12px; min-height: 48px; padding: 0 28px; font-size: 14px; justify-self: start; }
+@media (max-width: 1199px) { .mega { display: none; } }

@@ -2,10 +2,10 @@
 (() => {
   const { head, img } = UI;
   const app = document.getElementById('app');
-  const T = 'https://colbacolorbar.ru/themes/colba-redesign/assets/images/pages/about/';
-  const M = 'https://colbacolorbar.ru/storage/app/media/about-collections/';
+  const T = 'assets/img/site/';
+  const M = 'assets/img/site/';
   const team = MASTERS.slice(0, 6);
-  const collPhotos = ['photo_2023-11-30%2018.55.00.jpeg', 'thumb44066000auto-2.jpg', 'photo_2023-11-30%2018.54.44.jpeg', 'photo_2023-11-30%2018.55.24.jpeg'];
+  const collPhotos = ['photo_2023-11-30-18.55.00.jpeg', 'thumb44066000auto-2.jpg', 'photo_2023-11-30-18.54.44.jpeg', 'photo_2023-11-30-18.55.24.jpeg'];
 
   app.innerHTML = `
     ${head({ title: 'О нас', crumbs: [['О салоне']], lead: 'Colba Color Bar — концептуальное пространство, в котором создаются уникальные окрашивания, уходы и процедуры по восстановлению волос.',
@@ -19,7 +19,7 @@
         <p>Мы не только обучаемся у ведущих колористов мира, но и проводим собственные мастер-классы, снимаем трендовые коллекции, работаем с блогерами и звёздами.</p>
         <p>За эти годы наши колористы доказали, что окрашивание волос — это настоящее искусство, магия. Художник пишет картину, а мастер-колорист создаёт уникальный образ для каждого гостя Colba.</p>
       </div>
-      <div class="media-cover"><img src="${M}photo_2023-11-30%2018.56.01.jpeg" alt="Работа колористов Colba" loading="lazy"></div>
+      <div class="media-cover"><img src="${M}photo_2023-11-30-18.56.01.jpeg" alt="Работа колористов Colba" loading="lazy"></div>
     </section>
 
     <section class="block panel reading">

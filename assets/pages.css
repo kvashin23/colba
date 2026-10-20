@@ -4,7 +4,7 @@
 .page-head {
   position: relative; overflow: hidden; border-radius: var(--radius);
   padding: clamp(40px, 6vw, 80px) var(--gutter) clamp(28px, 3vw, 40px);
-  background: #e8eef0 url('https://colbacolorbar.ru/themes/colba-redesign//assets/images/page-team-head-bg.webp') center / cover;
+  background: #e8eef0 url('img/site/page-team-head-bg.webp') center / cover;
 }
 .page-head--small .h-display { font-size: clamp(22px, 4.6vw, 64px); }
 .page-head__lead { max-width: 640px; margin: 20px 0 0; font-size: clamp(16px, 1.3vw, 19px); }
@@ -509,3 +509,15 @@ html { scroll-padding-top: 80px; }
 }
 @media (max-width: 640px) { .price-aside { grid-template-columns: 1fr; } .price-aside .btn, .price-aside__call { grid-column: 1; grid-row: auto; width: 100%; } }
 .price-table .svc-card h3 { font-size: 14px; }
+
+/* ===== Правки из PDF ===== */
+/* «О нас» / «О процедуре»: заголовок над текстом, всё по левому краю */
+.reading { display: block; }
+.reading > .h-section { margin: 0 0 22px; }
+.reading .prose { max-width: 820px; }
+/* Правила, контакты: панель с текстом занимает всю колонку — без пустоты между панелью и формой */
+.split > .panel.prose, .split > .panel { max-width: none; }
+/* Счётчик на табах — бейдж, ровно по центру кнопки по высоте */
+.filters button small { display: inline-grid; place-items: center; min-width: 26px; height: 22px; padding: 0 7px; border-radius: 99px; background: rgba(45, 41, 42, .07); font-size: 12px; line-height: 1; opacity: 1 !important; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.filters button[aria-pressed="true"] small { background: rgba(255, 255, 255, .2); color: #fff; }
+.filters button { gap: 10px; }

@@ -117,13 +117,13 @@
   app.innerHTML = `
     ${head({ title: e(cat.title), lead: e(firstSentence(cat)), crumbs: [['Услуги', 'services.html'], [catTitle(cat)]],
       extra: `<div class="page-head__actions"><a class="btn" href="#book">Записаться</a>${about.about ? '<a class="btn btn--ghost" href="#about">О процедуре</a>' : ''}</div>` })}
-    <section class="block block--tight" aria-label="Цены"><div data-prices></div></section>
     ${about.photos?.length ? `
-    <section class="block" aria-labelledby="works-h">
+    <section class="block block--tight" aria-labelledby="works-h">
       <div class="block__head"><div><h2 class="h-section" id="works-h">Сделаем так же круто</h2><p>Работы наших мастеров</p></div><a class="link-more" href="gallery.html">Все работы</a></div>
       <div class="rail rail--six" id="catWorks">${about.photos.map(p => `<a class="photo" style="display:block" href="${img(p)}" data-lightbox="cat"><img src="${img(p)}" alt="" loading="lazy"></a>`).join('')}</div>
       ${arrows('catWorks')}
     </section>` : ''}
+    <section class="block" aria-label="Цены"><div data-prices></div></section>
     ${about.about ? `
     <section class="block" id="about" aria-labelledby="about-h">
       <div class="panel reading">

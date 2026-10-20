@@ -4,7 +4,7 @@ const UI = (() => {
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const e = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-  const UP = 'https://colbacolorbar.ru/storage/app/uploads/public/';
+  const UP = 'assets/img/u/';
   const img = p => (/^https?:/.test(p) ? p : UP + p);
   const rub = n => (n == null ? '' : Number(n).toLocaleString('ru-RU').replace(/ /g, ' ') + ' ₽');
   const param = k => new URLSearchParams(location.search).get(k);

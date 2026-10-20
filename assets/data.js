@@ -1,7 +1,8 @@
 // Данные мастеров. Фото — любые пропорции: кадр строится по лицу (см. fitPhoto в common.js).
 // face: [x, y, h] — центр лица (x, y) и высота лица от линии волос до подбородка (h),
 // всё в долях от ширины/высоты исходного фото. Без face фото просто обрезается по центру.
-const UPLOADS = 'https://colbacolorbar.ru/storage/app/uploads/public/';
+// Фото с colbacolorbar.ru скопированы в репозиторий (уменьшены для веба)
+const UPLOADS = 'assets/img/u/';
 
 const CATEGORIES = {
   stilist: 'Колористы',

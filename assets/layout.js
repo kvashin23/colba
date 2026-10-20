@@ -1,6 +1,5 @@
 // Общие шапка и подвал для всех страниц: <header class="site-header"></header> и <footer class="site-footer"></footer>
 (() => {
-  const SITE = 'https://colbacolorbar.ru';
   const page = location.pathname.split('/').pop().replace('.html', '') || 'index';
 
   // Меню: пункт с items — выпадающий список
@@ -65,15 +64,42 @@
       <div class="nav__item"><a class="nav__link is-strong" href="#book">Запись</a></div>
     </nav>
     <a class="site-phone" href="tel:+74991102210">8 499 110-22-10</a>
-    <button class="burger" type="button" aria-label="Меню" aria-expanded="false" aria-controls="siteNav"><span></span><span></span></button>`;
+    <button class="burger" type="button" aria-label="Все страницы сайта" aria-expanded="false"><span></span><span></span></button>
+    <div class="mega" id="megaMenu" aria-label="Все страницы сайта">
+      <div class="mega__grid">
+        ${NAV.filter(g => g.items).map(g => `
+          <div class="mega__col">
+            <a class="mega__title" href="${g.href}">${g.title}</a>
+            ${g.items.filter(([, , all]) => !all).map(([t, h]) => `<a href="${h}">${t}</a>`).join('')}
+          </div>`).join('')}
+        <div class="mega__col mega__contacts">
+          <a class="mega__title" href="contacts.html">Контакты</a>
+          <p>Москва, Б. Гнездниковский пер., 10<br>м. Пушкинская · Пн–Вс 10:00–22:00</p>
+          <a class="mega__phone" href="tel:+74991102210">8 499 110-22-10</a>
+          <a class="mega__phone" href="tel:+79260220366">8 926 022-03-66</a>
+          <a class="btn" href="#book">Записаться</a>
+        </div>
+      </div>
+    </div>`;
 
-  // Мобильное меню: бургер раскрывает панель, пункты с подменю раскрываются по тапу
+  // Бургер: на широком экране — большое меню со всеми страницами, на узком — панель меню с раскрытием по тапу
   const burger = header.querySelector('.burger');
+  const wide = matchMedia('(min-width: 1200px)');
+  const close = () => {
+    header.classList.remove('is-open', 'is-mega');
+    burger.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('no-scroll');
+  };
   burger.addEventListener('click', () => {
-    const open = header.classList.toggle('is-open');
-    burger.setAttribute('aria-expanded', open);
-    document.body.classList.toggle('no-scroll', open);
+    const cls = wide.matches ? 'is-mega' : 'is-open';
+    const open = !header.classList.contains(cls);
+    close();
+    if (open) { header.classList.add(cls); burger.setAttribute('aria-expanded', 'true'); if (cls === 'is-open') document.body.classList.add('no-scroll'); }
   });
+  addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+  document.addEventListener('click', e => { if (header.classList.contains('is-mega') && !e.target.closest('.mega, .burger')) close(); });
+  header.querySelectorAll('.mega a').forEach(a => a.addEventListener('click', close));
+  wide.addEventListener?.('change', close);
   header.querySelectorAll('.nav__item--drop > .nav__link').forEach(link => {
     link.addEventListener('click', e => {
       if (!header.classList.contains('is-open')) return;   // на десктопе — обычная ссылка
@@ -110,7 +136,7 @@
     ['YouTube', 'https://www.youtube.com/channel/UCb5yDMXwH9XasvpZRR2n1kA', '<path fill="currentColor" d="M21.6 7.2c-.2-.9-.9-1.6-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4c-.9.2-1.6.9-1.8 1.8C2 8.8 2 12 2 12s0 3.2.4 4.8c.2.9.9 1.6 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4c.9-.2 1.6-.9 1.8-1.8.4-1.6.4-4.8.4-4.8s0-3.2-.4-4.8zM10 15V9l5.2 3z"/>'],
   ];
   const PARTNERS = ['advante.png', 'kevin_murphy.svg', 'la_biosthetique.svg', 'lebel.svg', 'davines.png', 'nashi_argan.png'];
-  const IMG = `${SITE}/themes/colba-redesign/assets/images`;
+  const IMG = 'assets/img/site';
 
   const footer = document.querySelector('.site-footer');
   footer.innerHTML = `
@@ -150,11 +176,11 @@
     <div class="foot__partners">
       <div class="foot__group">
         <span>Наш проект</span>
-        <a href="http://supermancut.ru/" target="_blank" rel="noopener"><img src="${IMG}/projects/superman.png" alt="Супермен" loading="lazy"></a>
+        <a href="http://supermancut.ru/" target="_blank" rel="noopener"><img src="${IMG}/superman.png" alt="Супермен" loading="lazy"></a>
       </div>
       <div class="foot__group">
         <span>Наши партнёры</span>
-        ${PARTNERS.map(p => `<img src="${IMG}/partners/${p}" alt="" loading="lazy">`).join('')}
+        ${PARTNERS.map(p => `<img src="${IMG}/${p}" alt="" loading="lazy">`).join('')}
       </div>
     </div>
 
